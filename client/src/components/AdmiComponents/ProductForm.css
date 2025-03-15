@@ -1,0 +1,255 @@
+
+
+.img-area {
+border: 2px dotted var(--default-border);
+position: relative;
+width: 100%;
+background: var(--bs-dark-bg-subtle);
+border-radius: 4px;
+overflow: hidden;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+
+}.img-area::before {
+content: attr(data-img);
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+background: rgba(0, 0, 0, .5);
+color: #fff;
+font-weight: 500;
+text-align: center;
+display: flex;
+justify-content: center;
+align-items: center;
+pointer-events: none;
+opacity: 0;
+transition: all .3s ease;
+z-index: 200;}
+.img-area .icon {
+font-size: 100px;
+color: var(--bs-dark-text-emphasis);
+}.img-area h3 {
+font-size: 20px;
+font-weight: 500;
+margin-bottom: 6px;
+display: none;
+}.select-image {
+display: block;
+width: 100%;
+padding: 16px 0;
+background: var(--menu-prime-color);
+border-radius: 4px;
+color: #fff;
+outline: none;
+font-weight: 500;
+font-size: 16px;
+border: none;
+cursor: pointer;
+transition: all .3s ease;
+}
+.img-area img {
+width: 100%;
+height: 100%;
+vertical-align: middle;
+
+}
+
+
+.form{
+    display: flex;
+    flex-direction: column ;
+    gap: 15px;
+    padding: 20px;
+    width: 100%;
+    background: var(--bs-body-bg);
+    border-radius: 0.5rem;
+border: 0;
+box-shadow: 1px 0.125rem 0 rgba(10,10,10,.04);
+
+}
+.section_input{
+    display: flex;
+    flex-direction: column ;
+    gap: 15px;
+    width: 100%;
+}
+.section_input input{
+    width: 100%;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 4px;
+}
+
+.drop_down  {
+/* styles for .drop_down class */
+
+position: relative;
+
+}
+
+.select , .select_sexe{
+/* styles for .select class */
+background: #fff;
+
+display: flex;
+justify-content: space-between;
+align-items: center;
+border: 1px #ccc solid;
+border-radius: 4px;
+padding: 1em;
+cursor: pointer;
+transition:  0.3s;
+}
+
+
+
+.selected  {
+/* styles for .selected class */
+}
+
+.caret , .caret_sexe{
+width: 0;
+height: 0;
+border-left: 5px solid transparent;
+border-right: 5px solid transparent;
+border-top: 6px solid;
+transition: 0.3s;
+/* styles for .arrow class */
+}
+
+.caret.rotate , .caret_sexe.rotate{
+transform: rotate(180deg);
+}
+
+.menu ,.menu_sexe , .sous_menu{
+/* styles for .menu class */
+
+background: #323741;
+background: #fff;
+border: 1px #ccc solid;
+box-shadow: 0 0.5em 1em rgba(0,0,0,0.2);
+
+position: absolute;
+top: 3.3em;
+left: 50%;
+width: 100%;
+transform: translateX(-50%);
+opacity: 0;
+display: none;
+transition: 0.2s;
+z-index: 1;
+height: 250px;
+max-height: 250px;
+overflow-y: auto;
+
+}
+
+.menu.open , .menu_sexe.open ,.sous_menu.open{
+display: block;
+opacity: 1;
+}
+.menu li , .menu_sexe li ,.sous_menu li{
+
+
+padding: 15px;
+margin-bottom: 2px;
+cursor: pointer;
+
+}
+
+.menu li:hover , .menu li.active , .menu_sexe li:hover , .menu_sexe li.active , .sous_menu li:hover , .sous_menu li.active{
+background: var(--bs-purple);
+color: #fff;
+}
+.active {
+/* styles for .active class */
+}
+.two-rows{
+display: grid;
+grid-template-columns: repeat(2,1fr);
+gap: 20px;
+}
+.menu input ,.sous_menu input{
+padding: 15px;
+border: 1px solid #ccc;
+border-radius: 0;
+
+}
+.menu input::placeholder , .sous_menu input::placeholder{
+text-transform: uppercase;
+}
+.menu li , .sous_menu li{
+text-transform: capitalize;
+}
+.foor_rows{
+display: grid;
+grid-template-columns: repeat(4,1fr);
+gap: 15px;
+width: 100%;
+}
+label input::placeholder{
+text-transform: capitalize !important;
+}
+.section_input textarea{
+padding: 8px 15px;
+height: 76px;
+resize: none;
+outline: none;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+.next{
+background:var(--bs-success);
+border-radius: 4px;
+color: #fff;
+font-size: 16px;
+font-weight: 500;
+padding: 8px 15px;
+cursor: pointer;
+transition: all .3s ease;
+border: none;
+outline: none;
+
+width: fit-content;
+}
+.return{
+border-radius: 4px;
+color: #fff;
+font-size: 16px;
+font-weight: 500;
+padding: 8px 15px;
+cursor: pointer;
+transition: all .3s ease;
+border: none;
+outline: none;
+
+width: fit-content;
+}
+label{
+float: left;
+position: relative;
+width: 100%;
+text-align: left;
+font-weight: 500;
+color: #878C9F;
+color: var(--header-prime-color);
+font-size: 18px;
+font-family: "poppins";
+
+}
+.sous_cat{
+opacity: 0;
+visibility: hidden;
+display: none;
+transition: all .4s ease-in-out;
+}
+.sous_cat.show{
+display: flex;
+visibility: visible;
+opacity: 1;
+}
