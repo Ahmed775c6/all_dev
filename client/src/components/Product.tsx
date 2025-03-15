@@ -39,7 +39,7 @@ if(auth){
 
   }catch(err){
     console.log(err);
-    alert("something went wrong please try again");
+    alert("connecter a votre compte pour enregistrer cette produit sur votre favorise");
   }
 }
   const [C, setC] = useState(false);
@@ -68,7 +68,7 @@ const dipatch = useDispatch();
               }}
               id={product._id} // Updated to use _id
             ></i>
-            <i className="ri-heart-line" onClick={()=>{saveFav(product)}}></i>
+            <i className={`ri-heart-line `}  onClick={()=>{saveFav(product)}}></i>
             <i
               className="ri-eye-line"
               id={`click_${product._id}`} // Updated to use _id

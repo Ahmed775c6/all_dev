@@ -86,7 +86,7 @@ const Hair = () => {
           <div className="w-full flex flex-col-reverse gap-0 justify-center">
             <motion.img
               key={selectedColor}
-              src={`/src/assets/${selectedColor}.png`}
+              src={`/assets/${selectedColor}.png`}
               alt="Hair Color Preview"
               className="w-full h-[60vh] p-2  object-contain"
               initial={{ opacity: 0, y: 20 }}

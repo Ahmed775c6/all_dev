@@ -123,7 +123,7 @@ const visageScanner = ({p} :any) => {
       {/* Before Image */}
       <motion.img
         key="before"
-        src="src/assets/before2.png"
+        src="/assets/before2.png"
         alt="before"
         className="absolute inset-0 rounded-md p-2 w-full h-full object-cover"
         initial={{ opacity: 1 }}
@@ -134,7 +134,7 @@ const visageScanner = ({p} :any) => {
       {/* After Image */}
       <motion.img
         key="after"
-        src="src/assets/after.png"
+        src="/assets/after.png"
         alt="after"
         className="absolute rounded-md inset-0 p-2 w-full h-full object-cover"
         initial={{ opacity: 0 }}

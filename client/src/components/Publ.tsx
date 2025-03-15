@@ -86,7 +86,7 @@ const [C,setC] = useState(false);
             <div className="small-images ">
           {
             data?.map((pr:any,index :any)=>(
-                <img src={pr.mainImage} alt={`pr-${index}`} className="w-32 h-32" key={index} onClick={()=>{
+                <img src={pr.mainImage} alt={`pr-${index}`} className="w-32  h-32" key={index} onClick={()=>{
                     setIndex(index);
                     setCurrent(pr);
                   

@@ -59,8 +59,11 @@ const Carte = ({ setCaret }: { setCaret: (value: boolean) => void }) => {
           {items.length > 0 ? (
             items.map((item: Item, index: number) => (
               <div
-                className="w-full flex p-2 gap-3 shadow-sm rounded-sm hover:bg-gray-100"
+                className="w-full flex p-2 cursor-pointer gap-3 shadow-sm rounded-sm hover:bg-gray-100"
                 key={index}
+                onClick={()=>{
+                  window.location.href = `ViewProduct?id=${item.id}`
+                }}
               >
                 <img
                   src={item.product_image_0}

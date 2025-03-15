@@ -1129,7 +1129,7 @@ app.get('/getproductRv101/:id',async(req,res)=>{
   }
 })
 app.get('/ProductsPl2', async (req, res) => {
-  const ITEMS_PER_PAGE = 25;
+  const ITEMS_PER_PAGE = 100;
   try {
     const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
     const limit = parseInt(req.query.limit) || ITEMS_PER_PAGE; // Default to 10 items per page
@@ -1142,6 +1142,36 @@ app.get('/ProductsPl2', async (req, res) => {
       .limit(limit)
       .toArray();
 
+    // Get the total number of products for pagination calculation
+    const totalProducts = await db.collection(PRODUCTS_COLLECTION).countDocuments();
+
+    res.json({
+      data,
+      totalProducts,
+      currentPage: page,
+      totalPages: Math.ceil(totalProducts / limit),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+app.get('/ProductsPl2014', async (req, res) => {
+  const ITEMS_PER_PAGE = 100;
+  try {
+    const page = parseInt(req.query.page) || 1; //
+    const limit = parseInt(req.query.limit) || ITEMS_PER_PAGE;
+    const id = parseInt(req.query.id) || ""; // 
+    const skip = (page - 1) * limit;
+console.log('pppppppppppppppppp ',id)
+    // Fetch data with pagination
+    const data = await db.collection(PRODUCTS_COLLECTION)
+      .find()
+      .skip(skip)
+      .limit(limit)
+      .toArray();
+data.filter((item)=> {return item.Categorie.toLocaleLowerCase() == id.toLocaleLowerCase() || item.sous.toLocaleLowerCase() == id.toLocaleLowerCase() || item.marques.toLocaleLowerCase() == id.toLocaleLowerCase() 
+} )
     // Get the total number of products for pagination calculation
     const totalProducts = await db.collection(PRODUCTS_COLLECTION).countDocuments();
 

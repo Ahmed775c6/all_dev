@@ -4,10 +4,16 @@ import BrandsLinks from "../../components/BrandsLinks";
 import Footer from "../../components/Footer";
 import Product from "../../components/Product";
 import Filter from "./ShopFilter";
-import { GetP1 } from "../../Logic/getApp";
+import { GetP1 ,GetP22} from "../../Logic/getApp";
 import Pagination from "../../components/Pagination";
 import ProductOverviewPopup from "../../components/Popup";
+import { useLocation } from "react-router-dom";
 const Shop = () => {
+  const location = useLocation();
+  // Manually parse the query string from the full URL
+  const searchParams = new URLSearchParams(window.location.search);
+  const direction = searchParams.get("direction");
+  console.log(direction);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedsous, setSousCat] = useState<string | null>(null);
   const [selectedBRand, setBr] = useState<string | null>(null);
@@ -24,15 +30,31 @@ const Shop = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await GetP1(currentPage, postsPerPage); // Pass currentPage and postsPerPage to the API
-        const productsData = response.data.map((product : any) => ({
-          ...product,
-          currentPrice: Number(product.currentPrice), // Convert price to number
-        }));
+      
 
-        setProducts(productsData);
-        setTotalProducts(response.totalProducts);
-        setLoading(false);
+        if(!direction){
+          const response = await GetP1(currentPage, postsPerPage); // Pass currentPage and postsPerPage to the API
+          const productsData = response.data.map((product : any) => ({
+            ...product,
+            currentPrice: Number(product.currentPrice), // Convert price to number
+          }));
+  
+          setProducts(productsData);
+          setTotalProducts(response.totalProducts);
+          setLoading(false);
+        }else{
+          const response = await GetP22(currentPage, postsPerPage ,direction); 
+      
+          const productsData = response.data.map((product : any) => ({
+            ...product,
+            currentPrice: Number(product.currentPrice), // Convert price to number
+          }));
+  
+          setProducts(productsData);
+          setTotalProducts(response.totalProducts);
+          setLoading(false);
+        }
+
       } catch (error) {
         console.error("Error fetching products:", error);
       }

@@ -22,9 +22,20 @@ export const GetP = async function () {
   }
 };
 
-export const GetP1 = async (page = 1, limit = 25) => {
+export const GetP1 = async (page = 1, limit = 100) => {
   try {
     const response = await fetch(`${baseUrl}/ProductsPl2?page=${page}&limit=${limit}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error;
+  }
+};
+export const GetP22 = async (page = 1, limit = 100, id :any) => {
+  try {
+    console.log('od :!',id)
+    const response = await fetch(`${baseUrl}/ProductsPl2014?page=${page}&limit=${limit}&id=${id}`);
     const data = await response.json();
     return data;
   } catch (error) {

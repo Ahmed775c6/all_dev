@@ -61,7 +61,16 @@ setMenu(!Menu)
   };
 
 
-  
+  const handelSrarh = async(e:any)=>{
+  e.preventDefault()
+try{
+window.location.href = `/shop?direction=${Sv}`
+
+} catch(err){
+
+  alert('unexpected error refresh and try again')
+} 
+}
 const [show,setshow] = useState(false);
 const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
 
@@ -131,7 +140,7 @@ const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
         </div>
 
         <div className="flex w-full bg-gray-100">
-          <div className="w-full flex" >
+          <form className="w-full flex" onSubmit={handelSrarh} >
             <input
               type="text"
               id="search"
@@ -143,7 +152,7 @@ const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
             />
             <i className="ri-search-line text-white p-3 cursor-pointer bg-[#144273]" onClick={()=>{window.location.href = `/shop?direction=${Sv}`}}></i>
             <div className="suggestions" id="suggestions"></div>
-          </div>
+          </form>
         </div>
 
         <div className="auth w-full">
@@ -223,7 +232,7 @@ display : `${auth?.user == null ? 'none' : "flex"}`  , height : '25px !important
         <div className="links2 makeup">
           <ul>
             <li >
-              <img src="src/assets/makeuo.png" alt="Makeup" />
+              <img src="/assets/makeuo.png" alt="Makeup" />
               <a href="/makeup">Maquillage</a>
             </li>
           </ul>
@@ -231,7 +240,7 @@ display : `${auth?.user == null ? 'none' : "flex"}`  , height : '25px !important
         <div className="links2 gym">
           <ul>
             <li>
-              <img src="src/assets/gym.png"  alt="Gym" />
+              <img src="/assets/gym.png"  alt="Gym" />
               <a href="/gym">Nutrition Sportive</a>
             </li>
           </ul>
@@ -239,7 +248,7 @@ display : `${auth?.user == null ? 'none' : "flex"}`  , height : '25px !important
         <div className="animals links2">
           <ul>
             <li>
-              <img src="src/assets/animals.png"  alt="Animals" />
+              <img src="/assets/animals.png"  alt="Animals" />
               <a href="/animals">Animalerie</a>
             </li>
           </ul>

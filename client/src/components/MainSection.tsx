@@ -124,7 +124,7 @@ F();
         </div>
         <div className="visage-main">
           <div className="visage-image">
-            <img src="src/assets/face.png" alt="" />
+            <img src="/assets/face.png" alt="" />
           </div>
           <div className="visage-shop" id="shopContainer" ref={scrollContainerRef} key="shopContainer">
   {products.map((product: any) => {
@@ -188,7 +188,7 @@ F();
         </div>
         <div className="visage-main">
           <div className="visage-image ch">
-            <img src="/src/assets/hair.png" alt="chevaux" />
+            <img src="/assets/hair.png" alt="chevaux" />
           </div>
           <div className="visage-shop" id="shopContainer2" ref={scrollContainerRef1}>
   {products.map((product: any) => {
