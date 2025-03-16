@@ -68,7 +68,7 @@ const [C,setC] = useState(false);
         <div className="pub">
             {
                 Publll.map((img,index)=>(
-                    <img src={img} className="w-full " alt={`pub-${index}`} key={index} id={`hot_pub_${index}`} />            
+                    <img src={img} className="w-full  max-h-80 object-contain" alt={`pub-${index}`} key={index} id={`hot_pub_${index}`} />            
                 ))
             }
    
@@ -100,19 +100,19 @@ const [C,setC] = useState(false);
               window.location.href = `/ViewProduct?id=${current._id}`
             }} >
     {
-            current.discount > 0 ?   <span className="purcentage absolute top-5 left-2 z-10 bg-rose-100 text-rose-500 px-2 rounded-full text-xs font-medium">
-          ⚡  {current.discount} %
+            current?.discount > 0 ?   <span className="purcentage absolute top-5 left-2 z-10 bg-rose-100 text-rose-500 px-2 rounded-full text-xs font-medium">
+          ⚡  {current?.discount} %
           </span> : null
           }
-     <img src={current.mainImage} className="w-full min-w-full" alt="big-boy" />
-     <CountdownTimer expirationDate={current.expiration}/>
+     <img src={current?.mainImage} className="w-full min-w-full" alt="big-boy" />
+     <CountdownTimer expirationDate={current?.expiration}/>
             
             <div className="w-full flex flex-col gap-2 p-2 bg-blue-100" >
-<h1 className="uppercase text-lg font-semibold"> {current.name} </h1>
+<h1 className="uppercase text-lg font-semibold"> {current?.name} </h1>
 
 <div className="price flex  gap-2">
-  <div className="current_price">{current.currentPrice} TND</div>
- <div className="old_price line-through text-[12px]">{current.oldPrice} TND</div> 
+  <div className="current_price">{current?.currentPrice} TND</div>
+ <div className="old_price line-through text-[12px]">{current?.oldPrice} TND</div> 
  </div>
 <button className="bg-[var(--ghame9)] text-white cursor-pointer p-2 rounded-3xl" onClick={()=>{
   addToCart(current)

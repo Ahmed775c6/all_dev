@@ -57,8 +57,8 @@ if(r.data.message){
   const dipatch = useDispatch();
   return (
     <div className="product-popup-container w-screen min-w-screen h-screen p-0  flex fixed top-0 left-0 justify-center flex-col items-center z-50 min-h-[100vh] show" style={{display : "flex"}}>
-      <div className="contact-form-wrap  h-[100%] active max-w-[700px] overflow-hidden xsxssx " id="product_popup">
-        <div className="contact-form-container">
+      <div className="contact-form-wrap flex flex-col justify-center items-center  h-[100%]  active max-w-[700px]  xsxssx " id="product_popup">
+        <div className="">
           <div className="contact-form-main fl-wrap " id="info_u">
             {done ? <>
             <div className="p-2  shadow-md rounded-md w-fit left-[40%] bg-gray-100 absolute z-20 top-[40%] ">

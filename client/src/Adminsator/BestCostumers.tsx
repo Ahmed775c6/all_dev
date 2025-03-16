@@ -76,7 +76,7 @@ acc[customerEmail].dic =l;
               {bestCustomers.map((customer : any, index :any) => (
               <tr key={customer.email} className="w-full   " style={{borderBottom : "1px solid #ccc"}}>
              
-                <td className="p-3 "> {index + 1} - {    customer.name}</td>
+                <td className="p-3 ">   {    customer.name}</td>
                 <td className="p-3 ">{customer.email}</td>
                 <td className="p-3 text-center">{customer.totalSpent.toFixed(3)} TND </td>
                 <td className="p-3 text-center">{customer.dic}</td>

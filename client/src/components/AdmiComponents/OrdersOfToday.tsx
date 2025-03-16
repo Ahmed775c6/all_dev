@@ -3,6 +3,7 @@ import axios from "axios";
 import { motion } from 'framer-motion';
 import { FaSpinner } from 'react-icons/fa';
 import io from 'socket.io-client';
+import { useStore } from "react-redux";
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 type Order = {
   _id: string;
@@ -40,7 +41,8 @@ const OrderTableToday = ({ statusOeder }: any) => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);
 
-
+const [up1,setIp1] = useState(false)
+const [up2,setUp2] =useState(false)
   useEffect(() => {
     // Initialize WebSocket connection
     const socket = io(`${baseUrl}`);
@@ -140,16 +142,21 @@ const OrderTableToday = ({ statusOeder }: any) => {
 
   const updateStatus = (newStatus: "pending" | "confirmed" | "canceled") => {
     if (!selectedOrder) return;
-
+newStatus == "canceled" ? setIp1(true) : setUp2(true)
     axios.post(`${baseUrl}/update_orders_status/${selectedOrder._id}`, { status: newStatus })
       .then((res) => {
-        setMessage(res.data.message);
-        console.log(res.data)
+        if(res.data){
+          setMessage('Sattus updated Succesfully');
+    
       
-        setOrders(prev => prev.map(order => 
-          order._id === selectedOrder._id ? { ...order, status: newStatus } : order
-        ));
-        setSelectedOrder({ ...selectedOrder, status: newStatus });
+          setOrders(prev => prev.map(order => 
+            order._id === selectedOrder._id ? { ...order, status: newStatus } : order
+          ));
+          setSelectedOrder({ ...selectedOrder, status: newStatus });
+        }
+        setIp1(false) 
+        setUp2(false)
+ 
       })
       .catch(console.error);
   };
@@ -261,14 +268,15 @@ const OrderTableToday = ({ statusOeder }: any) => {
                     onClick={() => updateStatus("confirmed")}
      className={`bg-green-100 text-green-600 px-4 py-2 rounded hover:bg-green-200 transition-colors ${selectedOrder.status == "confirmed" ? "cursor-not-allowed": 'cursor-pointer'}`}
                   >
-                    Confirm Order
+                 { up2 ? 'loading .. '  :'  Confirm Order'}   
                   </button>
                   <button 
-                    onClick={() => updateStatus("canceled")}
+                
+                    onClick={() => { updateStatus("canceled")}}
                     disabled = {selectedOrder.status == "canceled"}
                     className={`bg-red-100 text-red-600 px-4 py-2 rounded hover:bg-red-200 transition-colors ${selectedOrder.status == "canceled" ? "cursor-not-allowed": 'cursor-pointer'}`}
                   >
-                    Cancel Order
+                   { up1 ? 'loading .. '  :' Cancel Order'}
                   </button>
                 </div>
               </div>

@@ -18,6 +18,7 @@ const server = require("http").createServer(app);
 const useragent = require("useragent");
 const { link } = require('fs');
 const FRONT = process.env.FRONT_END_URL
+
 const io = require("socket.io")(server, {
     cors: {
     
@@ -82,7 +83,7 @@ async function run() {
 }
 //run().catch(console.dir);
 const client = new MongoClient(uri);
-let db;
+let db =client.db(dbName);
 app.get('/',(req,res)=>{
   res.json({message : 'working mate'})
 })
@@ -782,7 +783,7 @@ const verificationToken = uuid.v4();
                 email: req.body.email,
                 password: hashedPassword,
                 active: false,
-                pdf: "src/assets/pdf.png",
+                pdf: "https://res.cloudinary.com/dbbc3ueua/image/upload/v1742133592/fwf8e0fewfifkmbgpjue.png",
                 tel: req.body.tel,
                 code : verificationCode,
                 token : verificationToken,
@@ -857,8 +858,9 @@ app.post("/admin_login", async (req, res) => {
 
   try {
     // Find the admin user by email
+    console.log('res; ', req.body)
     const admin = await db.collection(ADMIN_COLLECTION).findOne({ email });
-
+console.log("ad :", admin)
     if (!admin || !(await bcrypt.compare(password, admin.password))) {
       return res.status(400).json({ error: "Invalid credentials" });
     }
@@ -941,7 +943,7 @@ app.get('/devices/:adminId', async (req, res) => {
 app.get('/allblogs',async(req,res)=>{
   try{
 const r = await db.collection(BLOGS_COLLECTION).find().toArray();
-console.log('x :',r)
+
 res.json({message : r})
   }catch(err){
     console.log(err)
@@ -1097,10 +1099,14 @@ app.get("/messages/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    console.log('here :', id);
+
     const messages = await db.collection(MessagesCollection).findOne({ id: id }) // Fetch messages sorted by time
-    console.log(messages.messages)
-    res.json(messages.messages);
+if(messages){
+  res.json(messages.messages || []);
+}else{
+  res.json([])
+}
+   
   } catch (err) {
     console.error("Error fetching messages:", err);
     res.status(500).send("Error fetching messages");
@@ -1382,7 +1388,12 @@ if(result){
 app.get('/ggAbout',async(req,res)=>{
   try{
 const pp = await db.collection(APPCOLLECTION).findOne({id :'About'})
-res.json({message : pp.content})
+if(pp){
+  res.json({message : pp.content})
+}else {
+  res.json({message : ''})
+}
+
   }catch(err){
     console.log(err)
     res.json({message : err});
@@ -1515,8 +1526,15 @@ const review = await db.collection(Reviews_Collection).updateOne({ _id: new Obje
 })
 app.post('/About',async(req,res)=>{
   try{
-const d = await db.collection(APPCOLLECTION).updateOne({id : 'About'},{$set :{content: req.body}});
-res.json({message : true})
+    const target = await db.collection(ADMIN_COLLECTION).findOne({id : "About"})
+    if(target){
+      const d = await db.collection(APPCOLLECTION).updateOne({id : 'About'},{$set :{content: req.body}});
+      res.json({message : true})
+    }else{
+      const d = await db.collection(APPCOLLECTION).insertOne({id : 'About',content : req.body})
+      res.json({message : true})
+    }
+
   }catch(err){
     console.log(err);
 res.json({message : err})
@@ -2250,9 +2268,7 @@ const l = await db.collection(RECIP_COLLECTION).find().toArray()
 
   const Gratui =await db.collection(APPCOLLECTION).findOne({id : "setup"});
   const Gratuit = Gratui.Gratuit;
-  
- 
-let nls = 0;
+  let nls = 0;
 if(Target.iu){
 nls = Target.utiliste * Target.merci;
 
@@ -2272,16 +2288,21 @@ total : Total + 7,
 Gratuit : Gratuit,
 
   }
-  console.log(Invoke);
-  await db.collection(RECIP_COLLECTION).insertOne(Invoke);
+console.log("LAalalala :", Invoke)
+ const AL =  await db.collection(RECIP_COLLECTION).insertOne(Invoke);
+  
+ 
+
+
+
 }else{
   const T = await db.collection(SALES_COLLECTION).findOne({'purchases.id': id })
   if(T){
     await db.collection(SALES_COLLECTION).deleteOne({'purchases.id' : id})
   }
 }
-    res.status(200).json({ message: "Sattus updated Succesfully !", })
-                
+
+res.status(200).json({ message: "Sattus updated Succesfully !" })             
 }else{
     res.json({message : "No id given !!"});
 }

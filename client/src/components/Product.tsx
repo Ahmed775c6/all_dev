@@ -53,10 +53,10 @@ const dipatch = useDispatch();
     <>
       {C ? <Placed setC={setC} /> : ""}
       <motion.div layout className="product2">
-        <div className="product_img">
+        <div className="product_img ">
           <img
             src={product.mainImage} // Updated to use mainImage
-            alt={product.name}
+            alt={product.name }
           />
           <div className="actions z-20">
             <i
@@ -78,7 +78,7 @@ const dipatch = useDispatch();
         </div>
         <div className="product_content">
           <div className="title_dis">
-            <p style={{color : '#4338ca' }}>{product.name} </p>
+            <p style={{color : '#4338ca' }}>{product.name.substring(0,21)} </p>
             <span>{product.description.substring(0, 30)}...</span>
           </div>
           <div className="price_pource">
