@@ -74,7 +74,7 @@ acc[customerEmail].dic =l;
         {
           bestCustomers.length > 0 ? <>
               {bestCustomers.map((customer : any, index :any) => (
-              <tr key={customer.email} className="w-full   " style={{borderBottom : "1px solid #ccc"}}>
+              <tr key={`${customer.email}-${index}`} className="w-full   " style={{borderBottom : "1px solid #ccc"}}>
              
                 <td className="p-3 ">   {    customer.name}</td>
                 <td className="p-3 ">{customer.email}</td>
