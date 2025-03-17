@@ -7,9 +7,9 @@ import Filter from "./ShopFilter";
 import { GetP1 ,GetP22} from "../../Logic/getApp";
 import Pagination from "../../components/Pagination";
 import ProductOverviewPopup from "../../components/Popup";
-import { useLocation } from "react-router-dom";
+
 const Shop = () => {
-  const location = useLocation();
+  //const location = useLocation();
   // Manually parse the query string from the full URL
   const searchParams = new URLSearchParams(window.location.search);
   const direction = searchParams.get("direction");
