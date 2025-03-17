@@ -3,7 +3,7 @@ import axios from "axios";
 import { motion } from 'framer-motion';
 import { FaSpinner } from 'react-icons/fa';
 import io from 'socket.io-client';
-import { useStore } from "react-redux";
+
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 type Order = {
   _id: string;
