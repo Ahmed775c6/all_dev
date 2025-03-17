@@ -214,6 +214,9 @@ const SaveMSg = async (data) => {
       return false;
     }
   };
+  app.get('/',(req,res)=>{
+    res.send('Hello World!')
+  })
 const hashPassword = async (password) => {
     const saltRounds = 13; // Higher values are more secure but slower
     const salt = await bcrypt.genSalt(saltRounds);
