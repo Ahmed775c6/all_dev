@@ -12,7 +12,7 @@ const cookieParser = require('cookie-parser');
 const { emit, send, title, exit } = require('process');
 const { arrayBuffer } = require('stream/consumers');
 const  {SendVerifCode,SendBookigNotificationMail, ReplayToContact} = require('./send_mails'); 
-const redis = require('redis');
+const {redis,createClient} = require('redis');
 const  {  v4: uuidv4  } = require("uuid")  // Generate unique session IDs
 const server = require("http").createServer(app);
 const useragent = require("useragent");
@@ -101,10 +101,31 @@ const U = process.env.REDIS_URL
 
 connectDB();
 
-const redis_client = redis.createClient();
-redis_client.connect().catch(console.error);
+//const redis_client = redis.createClient();
+//redis_client.connect().catch(console.error);
 
 
+
+const redis_client = createClient({
+    username: 'default',
+    password: 'Em8emhcQ8eclGhozMdpwbeOzygOykf2O',
+    socket: {
+        host: 'redis-16921.c339.eu-west-3-1.ec2.redns.redis-cloud.com',
+        port: 16921
+    }
+});
+
+  // >>> bar
+const RED = async()=>{
+  redis_client.on('error', err => console.log('Redis Client Error', err));
+
+await redis_client.connect();
+
+await redis_client.set('foo', 'bar');
+const result = await redis_client.get('foo');
+console.log(result)
+}
+RED()
 const port = process.env.PORT || 5000;
 app.use(bodyParser.json());
 // Functions
