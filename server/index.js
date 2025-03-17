@@ -22,15 +22,14 @@ const FRONT = process.env.FRONT_END_URL
 const io = require("socket.io")(server, {
     cors: {
     
-        origin: FRONT,
+        origin: '*',
     },
 });
 
 // APP use
 app.use(cors({
-    origin: "http://localhost:5173", 
-    methods: ["GET", "POST"],        
-    credentials: true                
+  origin: "*", // Allow all origins
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"] // Include all needed methods
 }));
 app.use(cookieParser());
 // Load environment variables
