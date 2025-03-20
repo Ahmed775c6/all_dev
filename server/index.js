@@ -22,13 +22,13 @@ const FRONT = process.env.FRONT_END_URL
 const io = require("socket.io")(server, {
     cors: {
     
-        origin: "https://front-seven-ruddy.vercel.app",
+        origin: FRONT,
     },
 });
 
 // APP use
 app.use(cors({
-    origin: 'https://front-seven-ruddy.vercel.app/', 
+    origin: FRONT, 
     methods: ["GET", "POST"],        
     credentials: true                
 }));
