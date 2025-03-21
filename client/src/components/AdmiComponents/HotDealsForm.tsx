@@ -80,12 +80,19 @@ window.location.reload();
       window.location.reload();
     }
   };
+  const [TLA,setTLA] = useState(false)
+  
 const handleAbout = async(e:any) =>{
+
   e.preventDefault();
+  setTLA(true)
 const Send = await axios.post(`${baseUrl}/About`,{Con});
 
 if(Send.data.message){
-  window.location.reload();
+ window.location.reload();
+}
+else {
+  setTLA(false)
 }
 
 }
@@ -232,10 +239,10 @@ if(Send.data.message){
 
 <button
     type="submit"
-    disabled = {TL}
-    className="bg-blue-500 text-white p-2 border-none rounded-md hover:bg-blue-600 transition-colors"
+  disabled = {TLA}
+    className="bg-blue-500 uppercase text-white p-2 border-none rounded-md hover:bg-blue-600 transition-colors"
   >
-{TL ? 'loading ...' :  'Save'}
+{TLA ? 'updating ...' :  'Save'}
   </button>
 </form>
 </div>

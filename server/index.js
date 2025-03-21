@@ -1550,7 +1550,7 @@ const review = await db.collection(Reviews_Collection).updateOne({ _id: new Obje
 })
 app.post('/About',async(req,res)=>{
   try{
-    const target = await db.collection(ADMIN_COLLECTION).findOne({id : "About"})
+    const target = await db.collection(APPCOLLECTION).findOne({id : "About"})
     if(target){
       const d = await db.collection(APPCOLLECTION).updateOne({id : 'About'},{$set :{content: req.body}});
       res.json({message : true})
