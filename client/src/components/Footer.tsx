@@ -18,7 +18,7 @@ const Footer = () => {
           <span className="fas fa-headphones-alt footer-call"></span>
           <div className="right-right-up">
             <h5>CONTACTER LE SERVICE CLIENT</h5>
-            <h3 className="text-[#144273]" style={{color : "144273 !important"}}>+216 25 743 292</h3>
+            <h3 className="text-[#144273]" style={{color : "144273 !important"}}>+216 99 103 052</h3>
             <div className="footer-pies">
               <p>Prix d'un appel local.</p>
               <p>
@@ -64,7 +64,7 @@ const Footer = () => {
           <ul>
             <li className="contact-link text-[#144273]">
               <span>Tél :</span>
-              <a href="tel:+21625743292" className="text-[#144273]">+216 25 743 292</a>
+              <a href="tel:+21625743292" className="text-[#144273]">+216 99 103 052</a>
             </li>
             <li className="contact-link text-[#144273]">
               <span>Email :</span>
