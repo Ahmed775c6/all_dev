@@ -29,11 +29,11 @@ setFound(true)
 <div className="w-full p-6  flex flex-col justify-center bg-white shadow-sm rounded-sm items-center">
 
     <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 bg-white shadow-sm rounded-sm p-4">
-    <h1 className="text-xl font-bold text-center">Mot de passe Oblieé</h1>
-{found ?  <p className="text-yellow-400">il n'y a aucun utilisateur avec cet email</p>  : null}
+    <h1 className="text-xl font-bold text-center">Mot de passe Oublié</h1>
+{found ?  <p className="text-yellow-400">il n'y a aucun utilisateur avec cet e-mail </p>  : null}
         <label htmlFor="email">Email :</label>
 <input type="email" name="email" id="email" placeholder="email " value={email} onChange={(e:any)=>{setEmail(e.target.value)}} required className="bg-gray-200 w-full p-2 " />
- <button className="bg-blue-950 p-2 text-white rounded-sm cursor-pointer uppercase" type="submit">{load ? "searching ..." : 'Find me'}</button>
+ <button className="bg-blue-950 p-2 text-white rounded-sm cursor-pointer uppercase" type="submit">{load ? "recherche ..." : 'trouver mon compte'}</button>
     </form>
 </div>
 <Footer/>

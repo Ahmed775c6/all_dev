@@ -26,7 +26,7 @@ const Er = () => {
 
 const [found,setFound] = useState(false);    
 const handleSubmit = async(e : any)=>{
-    console.log('sending :', code)
+
     let l = '';
     code.map((i)=>{l+=i})
     try{
@@ -45,19 +45,19 @@ setFound(true)
   }
   const handleChange = (index: number, value: string) => {
 
-      if (!/^\d?$/.test(value)) return; // Allow only single digits (0-9)
+      if (!/^\d?$/.test(value)) return; 
   
       const newCode = [...code];
       newCode[index] = value;
       setCode(newCode);
   
-      // Auto-focus next input if not the last one
+ 
       if (value && index < 4) {
           document.getElementById(`digit-${index + 1}`)?.focus();
       }
   };
   
-  // ✅ Handle backspace: Move to previous input if empty
+
   const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Backspace" && !code[index] && index > 0) {
           document.getElementById(`digit-${index - 1}`)?.focus();
@@ -72,11 +72,14 @@ setFound(true)
 <div className="w-full p-6  flex flex-col justify-center bg-white shadow-sm rounded-sm items-center">
 
     <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 bg-white shadow-sm rounded-sm p-4">
-    <h1 className="text-xl font-bold text-center">Mot de passe Oblieé</h1>
-{found ?  <p className="text-yellow-400">Wrong Code</p>  : null}
+    <h1 className="text-xl font-bold text-center">
+    mot de passe oublié</h1>
+{found ?  <p className="text-yellow-400">incorrect Code</p>  : null}
 
-<p><strong>NOTE : this token will expired in 15 min</strong></p>
-<p>a code have been sent to your email , if it's not found in your inbbox check your spam</p>
+<p><strong>
+REMARQUE : ce jeton expirera dans 15 minutes</strong></p>
+<p>
+un code a été envoyé à votre email, s'il ne se trouve pas dans votre boîte de réception, vérifiez vos spams</p>
         <label htmlFor="email">code :</label>
         <div className="w-full p-2 flex gap-2 justify-center items-center">
               {code.map((digit, index) => (
@@ -94,7 +97,7 @@ setFound(true)
                   />
               ))}
           </div>
- <button className="bg-blue-950 p-2 text-white rounded-sm cursor-pointer uppercase" type="submit">{load ? "checking ..." : 'Send'}</button>
+ <button className="bg-blue-950 p-2 text-white rounded-sm cursor-pointer uppercase" type="submit">{load ? "vérification ..." : 'envoyé'}</button>
     </form>
 </div>
 <Footer/>

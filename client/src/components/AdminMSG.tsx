@@ -5,15 +5,16 @@ import { handelchangeMSg } from "../Logic/helps";
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 const socket = io(`${baseUrl}`);
 import { showNotification } from "../Logic/BrowserN";
+
 const parseDate = (dateString: string) => {
   try {
     const [datePart, timePart] = dateString.split(', ');
     const [day, month, year] = datePart.split('/').map(Number);
-    const [hours, minutes] = timePart.split(':').map(Number); // No seconds
+    const [hours, minutes] = timePart.split(':').map(Number); 
     return new Date(year, month - 1, day, hours, minutes);
   } catch (error) {
     console.error('Invalid date format:', dateString);
-    return new Date(0); // Epoch fallback
+    return new Date(0); 
   }
 };
 
@@ -21,7 +22,7 @@ const sortMembersByDate = (members: any[]) => {
   return [...members].sort((a, b) => {
     const dateA = parseDate(a.lastMSG.date);
     const dateB = parseDate(b.lastMSG.date);
-    return dateB.getTime() - dateA.getTime(); // Descending order (latest first)
+    return dateB.getTime() - dateA.getTime(); 
   });
 };
 
@@ -32,13 +33,13 @@ const AdminMSG = ({ zoom, setZoom }: any) => {
   const [Het, setHet] = useState("");
   const [LoadingMSG, setLoadingMSG] = useState(false);
   const [messages, setMessages] = useState<any[]>([]);
-  const [newMessage, setNewMessage] = useState(""); // New state for input message
+  const [newMessage, setNewMessage] = useState(""); 
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
   const [Mobile,setMobile] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [popupSearch, setPopupSearch] = useState("");
-  const messagesEndRef = useRef<HTMLDivElement | null>(null); // Reference for scrolling to the latest message
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     document.body.classList.remove("light", "dark");
@@ -101,7 +102,7 @@ const AdminMSG = ({ zoom, setZoom }: any) => {
     };
   }, [Het]);
 
-  // Scroll to the bottom whenever the messages array changes
+
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -164,10 +165,11 @@ const AdminMSG = ({ zoom, setZoom }: any) => {
   const filteredClients = Cls.filter((client: any) =>
     client.name.toLowerCase().includes(popupSearch.toLowerCase())
   );
+  
 
   return (
     <div className="w-full flex h-[85vh] min-h-full arkh">
-      {/* Members List */}
+   
       <div
         className={`flex flex-col w-[30%] shadow-md loli ${theme === 'dark' ? 'bg-gray-900' : 'bg-white' } ${Mobile ? "mbactive" : ""}`}
         style={{ borderRight: "1px solid #ccc" }}
@@ -250,7 +252,7 @@ const AdminMSG = ({ zoom, setZoom }: any) => {
           </div>
         </div>
       )}
-      {/* Chat Section */}
+ 
       <div className={`messages-con w-full flex flex-col ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
         {Target === null ? (
           <div className="w-full flex justify-center items-center h-full text-center">
@@ -258,7 +260,7 @@ const AdminMSG = ({ zoom, setZoom }: any) => {
           </div>
         ) : (
           <>
-            {/* Chat Header */}
+    
             <header className="w-full p-4 shadow-md flex justify-between flex-row">
               <div className="w-full flex gap-3">
                 <img
@@ -268,15 +270,18 @@ const AdminMSG = ({ zoom, setZoom }: any) => {
                 />
                 <h1 className="dark:text-white"> {Target.name} </h1>
               </div>
-              <i
+        <div className="flex gap-3">
+        <i
                 className="ri-zoom-in-line p-2 cursor-pointer text-black dark:text-white"
                 onClick={() => {
                   setZoom(!zoom);
                 }}
               ></i>
+            
+        </div>
             </header>
 
-            {/* Messages List */}
+       
             <div className="w-full h-[75vh] p-4 flex flex-col gap-3 overflow-auto relative max-h-[75vh]">
               {LoadingMSG ? (
                 <p className="absolute inset-0 z-10 top-52 left-96">Loading...</p>
@@ -286,20 +291,23 @@ const AdminMSG = ({ zoom, setZoom }: any) => {
                     key={index}
                     style={{ borderRadius: "0 1.125rem 0 1.125rem" }}
                     
-                    className={`flex flex-col max-w-[75%] p-3 text-sm shadow-md ${
+                    className={`flex flex-col max-w-[75%] relative p-3 text-sm shadow-md ${
                       mes.sender === "admin"
-                        ? "self-end bg-blue-500 text-white"
-                        : "self-start bg-black text-white p-2"
+                        ? "self-end bg-blue-600 text-white"
+                        : "self-start bg-gray-800 text-white p-2"
                     }`}
                   >
                     {mes.msg}
+                    
+<i className="ri-delete-bin-line absolute hidden -top-4 right-0 cursor-pointer hover:text-red-500 transition"></i>
                   </p>
+                  
                 ))
               )}
-              <div ref={messagesEndRef} /> {/* This marks the end of the message list */}
+              <div ref={messagesEndRef} /> 
             </div>
 
-            {/* Message Input */}
+       
             <div className="w-full flex bg-white p-1 dark:bg-gray-900">
               <input
                 type="text"
@@ -313,7 +321,7 @@ const AdminMSG = ({ zoom, setZoom }: any) => {
                 onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               />
               <button
-                className="p-2 bg-black text-white ml-2 rounded"
+                className="p-2 bg-blue-600 text-white ml-2 rounded-sm"
                 onClick={sendMessage}
               >
                 SEND

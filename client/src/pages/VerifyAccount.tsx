@@ -13,22 +13,23 @@ const location = useLocation();
 const queryParams = new URLSearchParams(location.search);
 const token = queryParams.get("token");
 const {Verfied} = useSocket();
-// ✅ Handle input change
+const [loading, setLoading] = useState(false);
+
 const handleChange = (index: number, value: string) => {
   setWorng(false)
-    if (!/^\d?$/.test(value)) return; // Allow only single digits (0-9)
+    if (!/^\d?$/.test(value)) return;
 
     const newCode = [...code];
     newCode[index] = value;
     setCode(newCode);
 
-    // Auto-focus next input if not the last one
+   
     if (value && index < 4) {
         document.getElementById(`digit-${index + 1}`)?.focus();
     }
 };
 
-// ✅ Handle backspace: Move to previous input if empty
+
 const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Backspace" && !code[index] && index > 0) {
         document.getElementById(`digit-${index - 1}`)?.focus();
@@ -39,7 +40,7 @@ const handleVerify = async (e: React.FormEvent<HTMLFormElement>) => {
   const fullCode = code.join("");
 
   try {
- 
+ setLoading(true)
     const response = await axios.post(`${baseUrl}/VerifyAccount`, { 
       token: token,
       fullCode: fullCode 
@@ -56,8 +57,10 @@ const handleVerify = async (e: React.FormEvent<HTMLFormElement>) => {
     } else {
       setWorng(true);
     }
+    setLoading(false)
   } catch (err: any) {
     seterror(err);
+    setLoading(false)
   }
 };
 
@@ -69,16 +72,16 @@ const handleVerify = async (e: React.FormEvent<HTMLFormElement>) => {
         <div className="auth_style">
           <div className="contact-form-header2">
         
-            <h4>Verify Your Email :</h4>
+            <h4>Vérifiez votre e-mail :</h4>
           </div>
 {
   !sucess ? <form onSubmit={handleVerify} className="flex flex-col justify-center gap-2 p-3">
-  <h4>Enter 5 Digit code that has been sent to your email :</h4>
+  <h4>Entrez le code à 5 chiffres qui a été envoyé à votre adresse e-mail :</h4>
   {
     error1 ? <p className="bg-red-500">{error1} </p> : ''
   }
   {
-    wrong ? <p className="text-yellow-500">Wrong Code</p> : ''
+    wrong ? <p className="text-yellow-500">incorrect Code</p> : ''
   }
   <div className="w-full p-2 flex gap-2 justify-center items-center">
               {code.map((digit, index) => (
@@ -96,12 +99,14 @@ const handleVerify = async (e: React.FormEvent<HTMLFormElement>) => {
                   />
               ))}
           </div>
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md">Verify</button>
+          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md" disabled = {loading}>{loading ? "vérification" : 'Vérifier'}</button>
 </form> : 
 
 <>
-<p>Your Account has been verifyed Succesfully you can login </p>
-<a href="/home">Back To home </a>
+<p>
+Your Account has been verifyed Succesfully you can login
+Votre compte a été vérifié avec succès, vous pouvez vous connecter </p>
+<a href="/home">Retour à l'accueil</a>
 </>
 }
        

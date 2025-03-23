@@ -40,7 +40,13 @@ const Blog = () => {
   return (
     <>
   {
-    loading ? <Loader/> : <>
+    loading ?<>
+    <div className="w-full flex fixed top-0 left-0 justify-center flex-col items-center">
+    <Loader/> 
+    loading ...
+    </div>
+    
+    </> : <>
         <Navbar />
       <div className="w-full flex flex-col gap-3 p-6 bg-gray-100 dark:bg-gray-900">
 

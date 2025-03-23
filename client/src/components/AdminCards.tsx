@@ -1,13 +1,13 @@
 import { fecthDataAt } from "../Adminsator/Utils/getData";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion"; 
 
 const Card = ({ icon, iconBg, iconColor, value, category }: { icon: string, iconBg: string, iconColor: string, value: string, category: string }) => {
   return (
     <motion.div
       className="p-4 bg-white dark:bg-gray-900 rounded-sm shadow-sm relative justify-center flex items-center"
-      whileHover={{ scale: 1.05 }} // Adds scale effect on hover
-      transition={{ duration: 0.3 }} // Smooth transition
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.3 }} 
     >
       <div
         className="w-12 h-12 absolute top-5 left-5 flex items-center justify-center rounded-full"
@@ -36,11 +36,11 @@ const AdminCards = () => {
   }, []);
   
   const OverView = [
-    { category: "Sales", value: Data.sales  , icon: "ri-bar-chart-line", iconBg: "#E3FCEF", iconColor: "#4CAF50" },
-    { category: "Orders", value: Data.orders, icon: "ri-shopping-cart-line", iconBg: "#FFF4E5", iconColor: "#FF9800" },
-    { category: "Customers", value: Data.clients, icon: "ri-user-line", iconBg: "#E3F2FD", iconColor: "#2196F3" },
-    { category: "Expenses", value: `${Data.cost} TND`, icon: "ri-money-dollar-circle-line", iconBg: "#FCE4EC", iconColor: "rgb(235, 84, 99)" },
-    { category: "Revenue", value: `${Data.Revenu} TND`, icon: "ri-line-chart-line", iconBg: "#E8F5E9", iconColor: "rgb(96, 236, 171)" }
+    { category: "Sales", value: Data.sales || 0 , icon: "ri-bar-chart-line", iconBg: "#E3FCEF", iconColor: "#4CAF50" },
+    { category: "Orders", value: Data.orders || 0, icon: "ri-shopping-cart-line", iconBg: "#FFF4E5", iconColor: "#FF9800" },
+    { category: "Customers", value: Data.clients || 0, icon: "ri-user-line", iconBg: "#E3F2FD", iconColor: "#2196F3" },
+    { category: "Expenses", value: `${Data.cost ? Data.cost : 'loading'} TND`, icon: "ri-money-dollar-circle-line", iconBg: "#FCE4EC", iconColor: "rgb(235, 84, 99)" },
+    { category: "Revenue", value: `${Data.Revenu ? Data.Revenu : "loading" } TND`, icon: "ri-line-chart-line", iconBg: "#E8F5E9", iconColor: "rgb(96, 236, 171)" }
   ];
 
   return (
@@ -50,9 +50,9 @@ const AdminCards = () => {
           <motion.div
             key={index}
             className="relative"
-            initial={{ opacity: 0 }} // Start with opacity 0
-            animate={{ opacity: 1 }} // Fade in
-            transition={{ duration: 0.5, delay: index * 0.2 }} // Stagger delay for each card
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: index * 0.2 }} 
           >
             <Card
               icon={card.icon}
@@ -62,7 +62,7 @@ const AdminCards = () => {
               category={card.category}
             />
             {/* Chart Line */}
-            <svg className="w-16 h-full absolute top-0 right-4">
+            <svg className="w-16 h-full  absolute top-0 right-4">
               <path
                 d="M 0 40 L 25 20 L 50 35 L 75 10 L 100 30"
                 style={{ stroke: card.iconColor, strokeWidth: 2, fill: "none" }}

@@ -1,7 +1,7 @@
 import { useState,useEffect } from "react";
 import Notofications from "./Notofications";
 import { useAdminAuth } from "../../context/AdminAuthProvider";
-
+import { ClipboardPen } from "lucide-react";
 const Nav = ({AsideT, setAside} : any) => {
   const [N, SetN] = useState(false);
   const [A,setA] = useState(false)
@@ -40,9 +40,9 @@ A ? <>
 <div className=" min-w-[300px] absolute rounded-sm top-14 right-0 z-20  w-full bg-white shadow-sm p-2 dark:bg-gray-700 dark:text-white">
 <h1 className="w-full p-2 text-md dark:text-white  " style={{borderBottom : "1px solid #ccc"}}>Related Apps</h1>
 
-<div className="w-full grid grid-cols-3 gap-2 p-4">
+<div className="w-full grid grid-cols-3 gap-2 p-4 text-blue-900 font-semibold">
 <a href="/blogEditor" className="rounded-sm w-20 h-20 bg-blue-400 p-2 flex-col gap-2 flex justify-center text-center items-center">
-<i className="ri-news-line"></i>
+<ClipboardPen />
 <span>BlogEditor</span>
 </a>
 <a href="/MenuEdit" className="rounded-sm w-20 h-20 bg-blue-400 p-2 flex-col gap-2 flex justify-center text-center items-center">

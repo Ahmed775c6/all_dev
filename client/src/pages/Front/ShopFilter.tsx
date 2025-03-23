@@ -45,7 +45,7 @@ const Filter: React.FC<FilterProps> = ({ setSelectedCategory,setSousCat,setBr, s
   return (
     <div className="flex transition flex-col h-full w-full bg-white p-4 rounded-sm shadow-sm lxsksj" style={{left : Fst}}>
       
-    <i className="absolute top-2 right-2 font-semibold ri-close-line text-lg " onClick={()=>{setFst('-400px')}}>  </i>
+    <i className="absolute top-2 right-2 font-semibold ri-close-line text-lg " onClick={()=>{setFst('-700px')}}>  </i>
       <div className="mb-4">
         <h2 className="font-semibold mb-2">Categories</h2>
         <select

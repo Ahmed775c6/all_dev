@@ -1,18 +1,25 @@
-import  { FC, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
 interface MyEditorProps {
   setContent: React.Dispatch<React.SetStateAction<string>>;
   initialContent: any;
 }
-const MyEditor: FC<MyEditorProps> = ({ initialContent, setContent} : any) => {
+
+const MyEditor: FC<MyEditorProps> = ({ initialContent, setContent }) => {
   const editorRef = useRef<any>(null);
   const previewRef = useRef<HTMLIFrameElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [th,setTH] = useState('dark');
+  useEffect(()=>{
+const theme = localStorage.getItem('theme') || 'dark'
+setTH(theme)
+  },[th])
 
   const handleShowContent = () => {
     if (editorRef.current) {
       const content = editorRef.current.getContent();
-      setContent(content)
+      setContent(content);
       const previewIframe = previewRef.current;
 
       if (previewIframe && previewIframe.contentDocument) {
@@ -32,7 +39,7 @@ const MyEditor: FC<MyEditorProps> = ({ initialContent, setContent} : any) => {
                 }
                 h1, h2, h3, h4, h5, h6 { color: #fff; }
                 blockquote { 
-                  border-left: 4px solid #4ade80; /* Green border */
+                  border-left: 4px solid #4ade80;
                   padding: 10px 20px;
                   margin: 10px 0;
                   font-style: italic;
@@ -62,64 +69,70 @@ const MyEditor: FC<MyEditorProps> = ({ initialContent, setContent} : any) => {
     }
   };
 
-
   return (
-    <div className="dark:bg-gray-900 mb-2 rounded-md w-11/12 mx-auto mt-5">
+    <div className="dark:bg-gray-900 mb-2 rounded-md w-11/12 mx-auto mt-5 relative min-h-[400px]">
+      {/* Loading overlay */}
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center dark:bg-gray-900 rounded-md z-10">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+        </div>
+      )}
 
       <Editor
-  apiKey="uc6x3t53hnk7tliy1v6e0gwt74u0mlm4vj4j01k9uumw0ms7"
-  onInit={(_, editor) => (editorRef.current = editor)}
+        apiKey="uc6x3t53hnk7tliy1v6e0gwt74u0mlm4vj4j01k9uumw0ms7"
+        onInit={(_, editor) => {
+          editorRef.current = editor;
+          setIsLoading(false);
+        }}
+        initialValue={initialContent}
+        init={{
+          height: 400,
+          menubar: false,
+          skin: th === 'dark' ? 'oxide-dark' : 'oxide',
+          content_css: th === 'dark' ? 'dark' : 'default',
+          plugins: [
+            'advlist',
+            'autolink',
+            'lists',
+            'link',
+            'image',
+            'charmap',
+            'preview',
+            'anchor',
+            'searchreplace',
+            'visualblocks',
+            'fullscreen',
+            'insertdatetime',
+            'media',
+            'table',
+            'paste',
+            'help',
+            'wordcount',
+          ],
+          toolbar:
+            'undo redo | blocks | ' +
+            'bold italic underline strikethrough blockquote | ' +
+            'forecolor backcolor | ' +
+            'alignleft aligncenter alignright alignjustify | ' +
+            'bullist numlist outdent indent | ' +
+            'link image table preview | removeformat',
+          block_formats:
+            'Paragraph=p; Heading 1=h1; Heading 2=h2; Heading 3=h3; Heading 4=h4; Heading 5=h5; Heading 6=h6',
+          placeholder: 'Start typing here...',
+        }}
+      />
 
-  initialValue= {initialContent}
-  init={{
-    height: 400,
-    menubar: false,
-    skin: 'oxide-dark',
-    content_css: 'dark',
-    plugins: [
-      'advlist',
-      'autolink',
-      'lists',
-      'link',
-      'image',
-      'charmap',
-      'preview',
-      'anchor',
-      'searchreplace',
-      'visualblocks',
-      'fullscreen',
-      'insertdatetime',
-      'media',
-      'table',
-      'paste',
-      'help',
-      'wordcount',
-    ],
-    toolbar:
-      'undo redo | blocks | ' + 
-      'bold italic underline strikethrough blockquote | ' +
-      'forecolor backcolor | ' +
-      'alignleft aligncenter alignright alignjustify | ' +
-      'bullist numlist outdent indent | ' +
-      'link image table preview | removeformat',
-    block_formats:
-      'Paragraph=p; Heading 1=h1; Heading 2=h2; Heading 3=h3; Heading 4=h4; Heading 5=h5; Heading 6=h6',
-    placeholder: 'Start typing here...',
-  }}
-/>
       <button
         type="button"
-        id="show-content"
-        className="mt-4 px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 block mx-auto"
+        className="mt-4 px-6 py-2 dark:bg-gray-700 bg-blue-500 text-white rounded-md hover:bg-gray-600 block mx-auto"
         onClick={handleShowContent}
       >
         Show HTML Content
       </button>
 
-      {/* Iframe for Preview */}
       <iframe
         ref={previewRef}
-        className="w-full h-[300px] mt-5 border border-gray-600 rounded bg-gray-800"
+        className="w-full h-[300px] mt-5 border border-gray-600 rounded dark:bg-gray-800"
         title="Editor Preview"
       ></iframe>
     </div>

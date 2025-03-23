@@ -10,8 +10,8 @@ const Login: React.FC<LoginProps> = ({ closeSignIn }) => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [accessToken, setAccessToken] = useState<string | null>(null);
-
-    // ✅ Function to get a new access token using the refresh token
+const [Dis,setDis] =useState(false)
+  
     const getNewAccessToken = async () => {
         try {
             const response = await axios.post(
@@ -32,21 +32,21 @@ const Login: React.FC<LoginProps> = ({ closeSignIn }) => {
         }
     };
 
-    // ✅ Refresh token every 9 minutes only if the user is authenticated
+   
     useEffect(() => {
         if (!accessToken) return;
 
         const timer = setInterval(() => {
             getNewAccessToken();
-        }, 9 * 60 * 1000); // 9 minutes
+        }, 9 * 60 * 1000); 
 
         return () => clearInterval(timer);
     }, [accessToken]);
 
-    // ✅ Login Function
+   
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+setDis(true)
         try {
             const response = await axios.post(
             `${baseUrl}/login`,
@@ -63,9 +63,12 @@ const Login: React.FC<LoginProps> = ({ closeSignIn }) => {
 
             }
              else {
+                setDis(false)
                 setError("Invalid credentials");
             }
+       
         } catch (error) {
+            setDis(false)
             console.error("Login failed:", error);
             setError("Invalid credentials");
         }
@@ -103,14 +106,14 @@ const Login: React.FC<LoginProps> = ({ closeSignIn }) => {
                             required
                         />
 
-                        {error && <p className="error-message">{error}</p>}
+                        {error && <p className="error-message text-red-500">{error}</p>}
 
                         <a href="/forget_password" className="forget-pass-link">
                             Mot de passe oublié ?
                         </a>
 
-                        <button type="submit">Se Connecter</button>
-                    </form>
+                        <button type="submit" className={Dis ? 'cursor-not-allowed' : 'cursor-pointer'} disabled = {Dis}>{Dis ? 'connexion .. ' : "Se Connecter"}</button>
+                    </form> 
                 </div>
 
                 <div className="other-auth-options">

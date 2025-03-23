@@ -8,7 +8,7 @@ const ProductGrid = ({ products, activePromoTab, setShowItem }: {
   return (
     <div className="shop">
       <AnimatePresence mode="wait">
-        {/* Nouveaux */}
+    
         {activePromoTab === "Nouveaux" && (
           <motion.div 
             className="new1 p-6 one_style_grid active"
@@ -38,7 +38,7 @@ const ProductGrid = ({ products, activePromoTab, setShowItem }: {
 
 
 
-        {/* Promotions */}
+    
         {activePromoTab === "NOS TOP PROMOS" && (
           <motion.div 
             className="p-6 promortions1 one_style_grid active"

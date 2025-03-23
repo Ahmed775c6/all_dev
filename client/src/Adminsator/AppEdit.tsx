@@ -10,15 +10,14 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const AppEdit = () => {
 
- // State for loading indicator
-
+ 
 
   const [Changing,setChanging] = useState(false)
    const [file1, setFile1] = useState<File | null>(null);
    const [file2, setFile2] = useState<File | null>(null);
    const [filePreview1, setFilePreview1] = useState<string | null>(null);
    const [filePreview2, setFilePreview2] = useState<string | null>(null);
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light"); // State for handling errors
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
   const [AsideT, setAside] = useState(false);
   const [heroImages,setHeroImages] = useState([]);
   useEffect(() => {
@@ -28,7 +27,7 @@ const AppEdit = () => {
     setTheme(theme)
   }, [theme]);
   const [onTask, setTask] = useState(false);
-  // useEffect hook to fetch data when the component mounts
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,7 +65,7 @@ const AppEdit = () => {
 <section  className=" p-6 flex flex-col gap-3 dark:bg-[#2d3748] ">
 <div className="page_title" id="with_menu" >
   <p className="dark:text-white">Dashboard / Application Edit</p>
-  <button className="meny_btn p-2 bg-blue-500   float-right cursor-pointer rounded-sm text-white" onClick = {()=>{
+  <button className="meny_btn p-2 bg-blue-500  hover:bg-blue-600  float-right cursor-pointer rounded-sm text-white" onClick = {()=>{
     window.location.href = '/menuEdit'
   }} >Menu Edit</button>
 </div>
@@ -77,7 +76,7 @@ const AppEdit = () => {
     <h1 className="dark:text-white">Hot Deals Section :</h1>
   </header>
   
-<HotDealsForm setTask = {setTask} file1 = {file1} setFile1= {setFile1}  file2 = {file2} setFile2 = {setFile2} filePreview1 = {filePreview1} setFilePreview1 = {setFilePreview1} filePreview2 = {filePreview2} setFilePreview2 ={filePreview2} />
+<HotDealsForm setTask = {setTask} file1 = {file1} setFile1= {setFile1}  file2 = {file2} setFile2 = {setFile2} filePreview1 = {filePreview1} setFilePreview1 = {setFilePreview1} filePreview2 = {filePreview2} setFilePreview2 ={setFilePreview2} />
 
 </div>
 
@@ -85,7 +84,7 @@ const AppEdit = () => {
 </section>
   </div>
 </div>
-<button className="fixed justify-center right-10 bottom-10 rounded-full w-11 h-11 text-center items-center outline-none border-none cursor-pointer flex p-2 bg-blue-400 text-white"
+<button className="fixed justify-center right-10 bottom-10 rounded-full w-11 h-11 text-center items-center outline-none border-none cursor-pointer flex p-2 bg-blue-500 hover:bg-blue-600 text-white"
 onClick={()=>{
   setChanging(true);
 }}

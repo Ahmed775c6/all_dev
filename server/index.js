@@ -55,7 +55,7 @@ const BLOGS_COLLECTION = process.env.BLOGS_COLLECTION
 const Reviews_Collection = process.env.Reviews_Collection
 const EXPENESS_COLLECTION = process.env.EXPENESS_COLLECTION
 const BRANDS = process.env.BRANDS;
-const uri  = process.env.MONGO_URI
+const uri  = process.env.MONGO_URI;
 
 /*const { ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://ahmedchouikh2020:0oA8H5yrwmpgu4xw@cluster0.ybgdh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -834,7 +834,7 @@ const verificationToken = uuid.v4();
 // Login Route
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
-console.log(req.body)
+
     try {
         const user = await db.collection(USERS_COLLECTION).findOne({email : email });
         
@@ -1189,24 +1189,21 @@ app.get('/ProductsPl2', async (req, res) => {
 app.get('/ProductsPl2014', async (req, res) => {
   const ITEMS_PER_PAGE = 100;
   try {
+    console.log(req.query)
     const page = parseInt(req.query.page) || 1; //
     const limit = parseInt(req.query.limit) || ITEMS_PER_PAGE;
-    const id = parseInt(req.query.id) || ""; // 
+    const id = req.query.id || ""; // 
     const skip = (page - 1) * limit;
-console.log('pppppppppppppppppp ',id)
+
     // Fetch data with pagination
-    const data = await db.collection(PRODUCTS_COLLECTION)
-      .find()
-      .skip(skip)
-      .limit(limit)
-      .toArray();
-data.filter((item)=> {return item.Categorie.toLocaleLowerCase() == id.toLocaleLowerCase() || item.sous.toLocaleLowerCase() == id.toLocaleLowerCase() || item.marques.toLocaleLowerCase() == id.toLocaleLowerCase() 
+    const data = await db.collection(PRODUCTS_COLLECTION).find().skip(skip).limit(limit).toArray();
+const r = data.filter((item)=> {return item.Categorie.toLocaleLowerCase() == id.toLocaleLowerCase() || item.sous.toLocaleLowerCase() == id.toLocaleLowerCase() || item.marques.toLocaleLowerCase() == id.toLocaleLowerCase() 
 } )
     // Get the total number of products for pagination calculation
     const totalProducts = await db.collection(PRODUCTS_COLLECTION).countDocuments();
-
+console.log(data)
     res.json({
-      data,
+      data : r,
       totalProducts,
       currentPage: page,
       totalPages: Math.ceil(totalProducts / limit),
@@ -1931,10 +1928,16 @@ const deleteResult = await collection.deleteOne(
 
   app.post('/upLev',async(req,res)=>{
     try{
-  
-const a= await db.collection(APPCOLLECTION).updateOne({id: 'setup'}, {$set :{lv : req.body.lv}})
+  const target = await db.collection(APPCOLLECTION).findOne({id: "setup"});
+  if(target){
+    const a= await db.collection(APPCOLLECTION).updateOne({id: 'setup'}, {$set :{lv : req.body.lv}})
 
-res.json({message : true})
+    res.json({message : true})
+  }else{
+    await db.collection(APPCOLLECTION).insertOne({id : 'setup', lv : req.body.lv})
+    res.json({message : true})
+  }
+
     }catch(err){
       console.log(err);
       res.json({message :  err})
@@ -2109,7 +2112,7 @@ res.status(201).json({
 try{
   console.log(req.body)
   const K = await db.collection(ADMIN_COLLECTION).findOne({_id : new ObjectId(req.body.id)})
-  console.log('l ', K)
+ 
   const Do = await db.collection(ADMIN_COLLECTION).updateMany(
     { _id: new ObjectId(req.body.id) }, // Filter
     { $set: { prf: req.body.prf, name: req.body.name } } // Update operation
@@ -2185,36 +2188,35 @@ res.json({success : true})
       res.json({success : false})
     }
   })
-  // Admin Change Password Route
+
 app.post('/ADchangePassword', authenticateToken, async (req, res) => {
     const { oldPassword, newPassword } = req.body;
-     console.log(req.body)
+  
 
     try {
-        // Fetch the admin user from the database using the userId from the token
+      
         const admin = await db.collection(ADMIN_COLLECTION).findOne({ _id: new ObjectId(req.userId) });
         
         if (!admin) {
             return res.status(404).json({ error: "Admin not found" });
         }
 
-        // Compare the provided old password with the stored password
+  
         const isOldPasswordValid = await bcrypt.compare(oldPassword, admin.password);
         if (!isOldPasswordValid) {
             return res.status(400).json({ error: "Old password is incorrect" });
         }
 
-        // Hash the new password
+     
         const hashedNewPassword = await hashPassword(newPassword);
 
-        // Update the admin password in the database
         const updateResult = await db.collection(ADMIN_COLLECTION).updateOne(
             { _id: new ObjectId(req.userId) },
             { $set: { password: hashedNewPassword } }
         );
 
         if (updateResult.modifiedCount > 0) {
-            return res.json({ message: "Password changed successfully" });
+            return res.json({ message: "Password changed successfully" , success :true});
         } else {
             return res.status(500).json({ error: "Failed to update password" });
         }

@@ -47,19 +47,21 @@ if(pass == confrlpass){
 <div className="w-full p-6  flex flex-col justify-center bg-white shadow-sm rounded-sm items-center">
 
     <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 bg-white shadow-sm rounded-sm p-4">
-    <h1 className="text-xl font-bold text-center">Mot de passe Oblieé</h1>
+    <h1 className="text-xl font-bold text-center">
+    mot de passe oublié</h1>
 {found ?  <p className="text-red-400">something went wrong try again</p>  : null}
 {
     sucess ?  <p className="text-green-400">mot de passe modifié avec succès</p>:null
 }
 {match ? <p className="text-yellow-400">les mot de passe ne match pas</p> : null }
-        <label htmlFor="email">neaveux mot de passe :</label>
+        <label htmlFor="email">
+        nouveau mot de passe :</label>
 <input type="password" name="password" id="password" placeholder=" password " value={pass} onChange={(e:any)=>{setpass(e.target.value)}} required className="bg-gray-200 w-full p-2 " />
 <label htmlFor="email">confirmer votre mot de pass :</label>
 <input type="password" name="password2" id="password2" placeholder="confirme password " value={confrlpass} onChange={(e:any)=>{setconf(e.target.value)}} required className="bg-gray-200 w-full p-2 " />
  
  
- <button className="bg-blue-950 p-2 text-white rounded-sm cursor-pointer uppercase" disabled = {load} type="submit">{load ? "searching ..." : 'Find me'}</button>
+ <button className="bg-blue-950 p-2 text-white rounded-sm cursor-pointer uppercase" disabled = {load} type="submit">{load ? "recherche ..." : 'sauvegarder'}</button>
    {sucess ? <a href="/">accuiell</a> : null }
     </form>
 </div>

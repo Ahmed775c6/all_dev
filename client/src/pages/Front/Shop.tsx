@@ -8,12 +8,12 @@ import { GetP1 ,GetP22} from "../../Logic/getApp";
 import Pagination from "../../components/Pagination";
 import ProductOverviewPopup from "../../components/Popup";
 
+
 const Shop = () => {
-  //const location = useLocation();
-  // Manually parse the query string from the full URL
+
   const searchParams = new URLSearchParams(window.location.search);
   const direction = searchParams.get("direction");
-  console.log(direction);
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedsous, setSousCat] = useState<string | null>(null);
   const [selectedBRand, setBr] = useState<string | null>(null);
@@ -22,10 +22,10 @@ const Shop = () => {
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(25); // Number of items per page
+  const [postsPerPage] = useState(25);
   const [totalProducts, setTotalProducts] = useState(0);
   const [showItem,setShowItem] = useState<any>(null) 
-  const [Fst,setFST] = useState("-400px")// Total number of products
+  const [Fst,setFST] = useState("-700px")
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -43,7 +43,7 @@ const Shop = () => {
           setTotalProducts(response.totalProducts);
           setLoading(false);
         }else{
-          const response = await GetP22(currentPage, postsPerPage ,direction); 
+          const response = await GetP22(direction); 
       
           const productsData = response.data.map((product : any) => ({
             ...product,
@@ -69,7 +69,7 @@ const Shop = () => {
       const maxPrice = Math.max(...prices);
       setPriceRange([minPrice, maxPrice]);
     }
-  }, [products]); // Update price range when products change
+  }, [products]); 
 
   useEffect(() => {
     const filtered = products.filter(
@@ -91,23 +91,25 @@ const Shop = () => {
 
       <Navbar />
       <div className="w-full bg-[var(--bg)] h-full min-h-[100vh] flex gap-3 p-4 llsx">
-        <div className="flex flex-col h-full w-[25%] xlsksks bg-white p-4  rounded-sm shadow-sm">
+       {
+        direction ? null :  <div className="flex flex-col h-full w-[25%] xlsksks bg-white p-4  rounded-sm shadow-sm">
           
-          <h1 className="w-full flex justify-between">
-      <h1 className="text-lg font-semibold mb-4 flex gap-2" onClick={()=>{setFST('0')}}> <i className="ri-equalizer-line"></i> Filter</h1>
-    <p>{totalProducts}</p>
-          </h1>
-          <Filter
-            setSelectedCategory={setSelectedCategory}
-            setSousCat = {setSousCat}
-            setBr = {setBr}
-            setPriceRange={setPriceRange}
-            priceRange={priceRange}
-            products={products}
-            Fst={Fst}
-            setFst={ setFST}
-          />
-        </div>
+        <h1 className="w-full flex justify-between">
+    <h1 className="text-lg font-semibold mb-4 flex gap-2" onClick={()=>{setFST('0')}}> <i className="ri-equalizer-line"></i> Filter</h1>
+  <p>{totalProducts}</p>
+        </h1>
+        <Filter
+          setSelectedCategory={setSelectedCategory}
+          setSousCat = {setSousCat}
+          setBr = {setBr}
+          setPriceRange={setPriceRange}
+          priceRange={priceRange}
+          products={products}
+          Fst={Fst}
+          setFst={ setFST}
+        />
+      </div>
+       }
 
         <div className="w-full">
           <div className="grid grid-cols-3 gap-3 dkhdyh">

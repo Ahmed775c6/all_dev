@@ -48,7 +48,12 @@ const [Changing,setChanging] = useState(false);
 
 </div>
   </>: <>
+  <div className="w-full flex dark:bg-[#2d3748] min-h-[100vh] h-full">
+  <div className="w-full flex flex-col p-0">
+  <AdminMSG zoom = {zoom} setZoom = {setZoom}/>
+</div>
 
+  </div>
 
  </>
 

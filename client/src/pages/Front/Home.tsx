@@ -38,7 +38,9 @@ setArt(b.data)
     };
 
     fetchProducts();
+   setInterval(()=>{
     setLoading(false)
+   },2000)
   }, []); // Empty dependency array to run once on mount
 
   

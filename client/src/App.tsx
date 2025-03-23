@@ -37,6 +37,7 @@ import Passob from "./components/Passob";
 import Er from "./components/er";
 import ChangeP1012 from "./components/ChangepassCor";
 import Botifica from "./components/AdmiComponents/Botifica";
+import TermsAndFAQ from "./pages/Front/Lagels";
 function App() {
 
   return (
@@ -53,7 +54,7 @@ function App() {
           <Route path="/forget_password" element={<Passob />} />
           <Route path="/er" element={<Er/>} />
           <Route path="/changex" element={<ChangeP1012 />} />
-          
+          <Route path="/legal" element={<TermsAndFAQ />} />
           <Route path="/profile" element={
           
 <Profile/>

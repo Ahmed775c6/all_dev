@@ -8,6 +8,9 @@ const [lv,setLV] = useState<any>(0);
 const [status,setStarus] = useState(false)
 const [merci,setMerci] = useState<any>(0)
 const [ld,setLd] = useState(false);
+const [l1,setL11] = useState(false);
+const [l2,setL21] = useState(false);
+
 const [Gratuit,setGratuit] = useState<any>(0);
 const handlLev = async(e:any)=>{
   e.preventDefault();
@@ -28,36 +31,36 @@ setLd(false)
 }
 const handlPnt = async(e:any)=>{
   e.preventDefault();
-  setLd(true)
+  setL11(true)
   
   try{
 const res = await axios.post(`${baseUrl}/upPnt`,{merci});
-console.log(res)
+
 if(res){
 setStarus(true);
 }
-setLd(false)
+setL11(false)
   }catch(err){
     console.log(err)
     alert('something went refresh & wrong try again ');
-    setLd(false)
+setL11(false)
   }
 }
 const handlGrT = async(e:any)=>{
   e.preventDefault();
-  setLd(true)
+  setL21(true)
   
   try{
 const res = await axios.post(`${baseUrl}/upGrt`,{Gratuit});
-console.log(res)
+
 if(res){
 setStarus(true);
 }
-setLd(false)
+setL21(false)
   }catch(err){
     console.log(err)
     alert('something went refresh & wrong try again ');
-    setLd(false)
+    setL21(false)
   }
 }
   useEffect(() => {
@@ -122,21 +125,21 @@ const F = async()=>{
 
             <h2 className="text-black dark:text-white">laivraison (TND) </h2>
             <form className="flex w-full gap-2 flex-wrap items-center" onSubmit={handlLev}>
-      <input type="text" placeholder="laivraison prix  :" className="p-2 bg-gray-200 dark:bg-gray-800 rounded-sm" value={lv} onChange={(e)=>{setLV(e.target.value)}} />
+      <input type="text" placeholder="laivraison prix  :" className="p-2 bg-gray-200 dark:bg-gray-800 rounded-sm" value={lv} onChange={(e)=>{setLV(e.target.value); setStarus(false)} } />
             <button className="bg-blue-500 w-full p-2 text-white rounded-sm cursor-pointer" type="submit" disabled = {ld} >{ld ?  'loading..' : 'Save' }</button>
             </form>
             
             <h2 className="text-black dark:text-white">Point fidélité Value (TND) </h2>
             <form className="flex w-full gap-2 flex-wrap items-center" onSubmit={handlPnt}>
               <p> 1 point == ? TND </p>
-      <input type="text" placeholder="laivraison prix  :" className="p-2 bg-gray-200 dark:bg-gray-800 rounded-sm" value={merci} onChange={(e)=>{setMerci(e.target.value)}} />
-            <button className="bg-blue-500 p-2 w-full text-white rounded-sm cursor-pointer" type="submit" disabled = {ld} >{ld ?  'loading..' : 'Save' }</button>
+      <input type="text" placeholder="laivraison prix  :" className="p-2 bg-gray-200 dark:bg-gray-800 rounded-sm" value={merci} onChange={(e)=>{setMerci(e.target.value); setStarus(false)}} />
+            <button className="bg-blue-500 p-2 w-full text-white rounded-sm cursor-pointer" type="submit" disabled = {l1} >{l1 ?  'loading..' : 'Save' }</button>
             </form>
             <h2 className="text-black dark:text-white">Laivraison Free ? (TND) </h2>
             <form className="flex w-full gap-2 flex-wrap items-center" onSubmit={handlGrT}>
           
-      <input type="text" placeholder="laivraison prix  :" className="p-2 bg-gray-200 dark:bg-gray-800 rounded-sm" value={Gratuit} onChange={(e)=>{setGratuit(e.target.value)}} />
-            <button className="bg-blue-500 w-full  p-2 text-white rounded-sm cursor-pointer" type="submit" disabled = {ld} >{ld ?  'loading..' : 'Save' }</button>
+      <input type="text" placeholder="laivraison prix  :" className="p-2 bg-gray-200 dark:bg-gray-800 rounded-sm" value={Gratuit} onChange={(e)=>{setGratuit(e.target.value); setStarus(false)}} />
+            <button className="bg-blue-500 w-full  p-2 text-white rounded-sm cursor-pointer" type="submit" disabled = {l2} >{l2 ?  'loading..' : 'Save' }</button>
             </form>
           </div>
         </div>

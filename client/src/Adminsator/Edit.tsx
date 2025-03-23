@@ -13,7 +13,7 @@ const [bezy,setBezy] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
   const[send,setSend] = useState<any>(null);
  
-console.log(auth)
+
 const [AsideT, setAside] = useState(false)
   useEffect(() => {
     document.body.classList.remove("light", "dark");
@@ -35,11 +35,11 @@ const [Changing,setChanging] = useState(false);
 const [name,setName] = useState('');
 const [fixed,setFixed] = useState('');
 const [id,setID] = useState('');
-  // Password change handler
+const [passok,setPassok] = useState('')
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
-  
-    // Clear previous messages
+
+
     setErrorMessage("");
     setSuccessMessage("");
   
@@ -49,13 +49,14 @@ const [id,setID] = useState('');
     }
   
     try {
-      // Assuming your token is stored in localStorage or a state
-      const token = localStorage.getItem("adminToken"); // Or get it from a global state/context
+    const token = auth.token
   
       if (!token) {
         setErrorMessage("Authorization token missing.");
+        
         return;
       }
+      setBezy(true)
   
       // Send password change request to the backend with the token
       const response = await axios.post(
@@ -69,13 +70,16 @@ const [id,setID] = useState('');
       );
   
       if (response.data.success) {
-        setSuccessMessage("Password updated successfully!");
+      setPassok('password updated successfully')
+
       } else {
         setErrorMessage(response.data.message || "An error occurred.");
       }
+      setBezy(false)
     } catch (error) {
       console.error(error);
       setErrorMessage("Failed to update password.");
+      setBezy(false)
     }
   };
   
@@ -91,7 +95,7 @@ const [id,setID] = useState('');
   
 
   
-      console.log("Got link:", link?.link);
+   
   const   formData = {
         id:id,
         prf :""  ,
@@ -166,6 +170,9 @@ setLoading(false);
               <p className="flex w-full gap-2 text-[0.9rem]"> <i className="ri-image-edit-line"></i> Profile Photo :</p>
 
               <form onSubmit={handlePersonnel} className="w-full flex flex-col gap-3">
+              {successMessage && (
+                  <p className="text-green-500 text-sm">{successMessage}</p>
+                )}
                 <div className="w-full flex gap-0 alors2">
                   <div className="w-full flex flex-col justify-center items-center">
                     <img src={file} alt="Profile" className="w-40 h-40 rounded-md object-cover" />
@@ -188,7 +195,7 @@ setLoading(false);
                     <label htmlFor="name" className="w-full flex gap-2 text-[0.9rem]"> <i className="ri-user-smile-line"></i> User Name :</label>
                     <input
                       type="text"
-                      className="p-2 w-full bg-gray-200 outline-none border-none dark:bg-gray-700"
+                      className="p-2 w-full bg-gray-200 dark:text-white outline-none border-none dark:bg-gray-700"
                       placeholder="User Name :"
                  value={name}
                  onChange={(e : any)=>{
@@ -248,8 +255,8 @@ setLoading(false);
                 {errorMessage && (
                   <p className="text-red-500 text-sm">{errorMessage}</p>
                 )}
-                {successMessage && (
-                  <p className="text-green-500 text-sm">{successMessage}</p>
+                   {passok && (
+                  <p className="text-green-500 text-sm">{passok}</p>
                 )}
                 <button type="submit" className="bg-blue-500 p-2 text-white rounded-md cursor-pointer">
                   Save

@@ -56,7 +56,7 @@ setMenu(!Menu)
   };
 
   const popupMenuBarPrf = () => {
-    // Profile menu logic here
+  
     setshow(!show)
   };
 
@@ -104,9 +104,11 @@ const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
             <a href="/blog">Our Blog</a>
           </p>
         </div>
-        <div className="liavrison">
-          LIVRAISON GRATUITE À PARTIR DE {Gratuit} TND D'ACHATS DANS TOUTE LA TUNISIE!
-        </div>
+{
+  Gratuit > 0 ?         <div className="liavrison">
+  LIVRAISON GRATUITE À PARTIR DE {Gratuit} TND D'ACHATS DANS TOUTE LA TUNISIE!
+</div> : ''
+}
         <div className="contacts link">
           <i className="fas fa-phone"></i>
           <button onClick={()=>{
@@ -146,7 +148,7 @@ const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
               id="search"
               name="search"
               className="p-3 w-full flex  bg-gray-100 outline-none border-none "
-              placeholder="Search ..."
+              placeholder="Recherche ..."
               value={Sv}
               onChange={(e:any)=>{setSv(e.target.value)}}
             />
@@ -259,7 +261,7 @@ display : `${auth?.user == null ? 'none' : "flex"}`  , height : '25px !important
   <ul>
     {[
       { id: "visage", text: "Visage", query: "Visage" },
-      { id: "cheveux", text: "Chéveux", query: "Cheveux" },
+      { id: "cheveux", text: "Chéveux", query: "Cheveau" },
       { id: "corps", text: "Corps", query: "Corps" },
       { id: "bebe", text: "Bébé et Maman", query: "Bebe" },
       { id: "complement", text: "Compléments Alimentaires", query: "Complement" },

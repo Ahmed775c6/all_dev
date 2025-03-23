@@ -415,7 +415,7 @@ const AddProduct = () => {
                       <button
                         type="button"
                         className={`p-2 cursor-pointer ${
-                          theme === "dark" ? "bg-blue-400" : "bg-blue-400"
+                          theme === "dark" ? "bg-blue-500" : "bg-blue-500"
                         } text-white rounded-md`}
                         onClick={() => setStep("2")}
                       >

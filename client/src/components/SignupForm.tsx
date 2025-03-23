@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 const SignupForm = ({ closeSignUp }: any) => {
+  const [Dis,setDis] =useState(false)
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -20,10 +21,10 @@ const SignupForm = ({ closeSignUp }: any) => {
     }));
   };
 
-  // Handle form submission
+ 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    setDis(true)
     if (formData.pass !== formData.confirm_password) {
       alert("Passwords do not match");
       return;
@@ -41,9 +42,11 @@ window.location.href = `/verify?token=${response.data.token}`;
       }else {
         alert('email allready exist');
       }
+      setDis(false)
     } catch (error) {
       console.error("Error registering user:", error);
       alert(error);
+      setDis(false)
     }
   };
 
@@ -130,12 +133,13 @@ window.location.href = `/verify?token=${response.data.token}`;
                   name="acceptedTerms"
                   checked={formData.acceptedTerms}
                   onChange={handleChange}
+                  required
                 />
               </p>
 
-              <button type="submit" className="w-full">
-                Continue
+              <button type="submit" className={Dis ? 'cursor-not-allowed' : 'cursor-pointer'} disabled = {Dis}>{Dis ? 'connexion .. ' : "Se Connecter"}
               </button>
+              
             </div>
           </form>
         </div>

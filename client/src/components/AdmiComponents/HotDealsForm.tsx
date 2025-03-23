@@ -28,6 +28,7 @@ FetchHot();
     setPreview: React.Dispatch<React.SetStateAction<string | null>>
   ) => {
     const selectedFile = e.target.files?.[0] || null;
+
     setFile(selectedFile);
     setPreview(selectedFile ? URL.createObjectURL(selectedFile) : null);
   };
@@ -69,7 +70,7 @@ window.location.reload();
     try {
       const uploadedFile = await handelUpload(file);
       await axios.post(`${baseUrl}/publi`, { "f2": { link: uploadedFile?.link } });
-      console.log("Upload successful:", uploadedFile?.link);
+
       setPreview(uploadedFile?.link || null);
     } catch (error) {
       console.error("Upload failed:", error);
@@ -114,9 +115,9 @@ else {
       }
     }
   
-    // Save only the first 3 valid entries
+    
     const finalDeals = deals.slice(0, 3);
-    // Submit finalDeals to your backend/state
+   
   await axios.post(`${baseUrl}/saveDeals`,finalDeals);
 
     setTL(false);
@@ -125,7 +126,7 @@ else {
     <>
      
 
-      {/* Form for first file */}
+      
   <div className="w-full grid grid-cols-2 lmsx">
 <div className="w-full flex flex-col gap-3">
 <form
@@ -141,7 +142,7 @@ else {
         {filePreview1 && <img src={filePreview1} alt="pub-1" className="w-full mt-2" />}
         <button
           type="submit"
-          className="bg-black w-full p-2 text-white outline-none border-none rounded-md mt-4"
+          className="bg-blue-500 hover:bg-blue-600 w-full p-2 text-white outline-none border-none rounded-md mt-4"
         >
           Upload File 1
         </button>
@@ -158,10 +159,10 @@ else {
           onChange={(e) => handleFileChange(e, setFile2, setFilePreview2)}
           className="w-full border p-2 rounded-md"
         />
-        {filePreview2 && <img src={filePreview2} alt="pub-2" className="w-full mt-2" />}
+        {filePreview2 && <img src={filePreview2 } alt="pub-2" className="w-full mt-2" />}
         <button
           type="submit"
-          className="bg-black w-full p-2 text-white outline-none border-none rounded-md mt-4"
+          className="bg-blue-500 hover:bg-blue-600 w-full p-2 text-white outline-none border-none rounded-md mt-4"
         >
           Upload File 2
         </button>
