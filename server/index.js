@@ -55,7 +55,7 @@ const BLOGS_COLLECTION = process.env.BLOGS_COLLECTION
 const Reviews_Collection = process.env.Reviews_Collection
 const EXPENESS_COLLECTION = process.env.EXPENESS_COLLECTION
 const BRANDS = process.env.BRANDS;
-const uri  = process.env.MONGO_URI;
+const uri  = process.env.MONGO_URIPRO;
 
 /*const { ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://ahmedchouikh2020:0oA8H5yrwmpgu4xw@cluster0.ybgdh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
