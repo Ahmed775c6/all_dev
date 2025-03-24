@@ -11,12 +11,13 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser'); 
 const { emit, send, title, exit } = require('process');
 const { arrayBuffer } = require('stream/consumers');
-const  {SendVerifCode,SendBookigNotificationMail, ReplayToContact} = require('./send_mails'); 
+const  {SendVerifCode,SendBookigNotificationMail, ReplayToContact,SendAbonnement} = require('./send_mails'); 
 const {redis,createClient} = require('redis');
 const  {  v4: uuidv4  } = require("uuid")  // Generate unique session IDs
 const server = require("http").createServer(app);
 const useragent = require("useragent");
 const { link } = require('fs');
+const { subscribe } = require('diagnostics_channel');
 const FRONT = process.env.FRONT_END_URL
 
 const io = require("socket.io")(server, {
@@ -55,7 +56,7 @@ const BLOGS_COLLECTION = process.env.BLOGS_COLLECTION
 const Reviews_Collection = process.env.Reviews_Collection
 const EXPENESS_COLLECTION = process.env.EXPENESS_COLLECTION
 const BRANDS = process.env.BRANDS;
-const uri  = process.env.MONGO_URIPRO;
+const uri  = process.env.MONGO_URI;
 
 /*const { ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://ahmedchouikh2020:0oA8H5yrwmpgu4xw@cluster0.ybgdh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -108,9 +109,9 @@ connectDB();
 
 const redis_client = createClient({
     username: 'default',
-    password: 'Em8emhcQ8eclGhozMdpwbeOzygOykf2O',
+    password: process.env.REDIS_PASS,
     socket: {
-        host: 'redis-16921.c339.eu-west-3-1.ec2.redns.redis-cloud.com',
+        host: process.env.REDIS_URL,
         port: 16921
     }
 });
@@ -817,6 +818,7 @@ const verificationToken = uuid.v4();
                 pts : {pts  :0 , used : 0},
                 memberSens : formatDate101(new Date()),
                 messages : [],
+                sub : true,
             };
 
             const result = await collection.insertOne(newUser);
@@ -974,7 +976,17 @@ res.json({message : r})
     res.json({message : []})
   }
 })
+app.get('/legals101',async(req,res)=>{
+  try{
 
+    const i =await db.collection(APPCOLLECTION).findOne({id : "setup"});
+  
+    res.json({message : true , dt : [{g : i.Gratuit , p : i.merci }]})
+  }catch(err){
+    console.log(err)
+    res.json({message : false , dt : [{g : 'X' , p : '0'}]})
+  }
+})
 
 app.get('/Analyse',async(req,res)=>{
   try{
@@ -1576,6 +1588,22 @@ res.json({message :true})
   }catch(err){
     console.log('err',err);
     res.json({message:false});
+  }
+})
+app.post('/SubSr',async(req,res)=>{
+  try{
+
+   const insertGdj = await db.collection(process.env.SUB_COLLECTION).findOne({email : req.body.email})
+   if(insertGdj){
+res.json({message : 'déjà inscrits!'});
+   }else{
+await db.collection(process.env.SUB_COLLECTION).insertOne({email : req.body.email , sub: true , name : req.body.name})
+res.json({message : 'abonné avec succès !'});
+   }  
+  
+  }catch(err){
+    console.log(err)
+    res.json({message : 'err'})
   }
 })
 app.post('/delPostk',async(req,res)=>{
@@ -2493,7 +2521,7 @@ app.post('/deleteLinkf/:id',async(req,res)=>{
 // Socket.io 
 
 io.on("connection", (socket) => {
-    console.log("a user connected: ", socket.id);
+   
     
   socket.on('send-message',async(data)=>{
     const date = formatDate101(new Date())
@@ -2508,8 +2536,19 @@ io.on("connection", (socket) => {
       const date = formatDate101(new Date());
       se.date = date
 const result = await db.collection(BLOGS_COLLECTION).insertOne(se);
-console.log(result)
-result.acknowledged ? socket.broadcast.emit('newBlog', req.body.Data) : null
+
+result.acknowledged ? async()=>{
+  socket.broadcast.emit('newBlog', req.body.Data);
+  const sub = await db.collection(USERS_COLLECTION).find({sub : true}).toArray()
+  const L = await db.collection(process.env.SUB_COLLECTION).find().toArray()
+sub.forEach((client)=>{
+  SendAbonnement({mail : client.email , name : client.name , message : `new post link ` , link : `blog_item?id=${result.insertedId}`})
+})
+L.forEach((client)=>{
+  SendAbonnement({mail : client.email , name : client.name , message : `new post link ` , link : `blog_item?id=${result.insertedId}`})
+})
+
+} : null
 return result.acknowledged ? res.json({message : true}) : res.json({message : false});
     }catch(err){
       console.log(err);

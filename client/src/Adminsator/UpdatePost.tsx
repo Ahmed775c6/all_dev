@@ -3,10 +3,11 @@ import { handelUpload } from '../Logic/UploadFile';
 import { useEffect, useState } from 'react';
 import Themes from '../components/AdmiComponents/Themes';
 import Aside from '../components/AdmiComponents/Aside';
-import MyEditor101 from '../components/AdmiComponents/BlogTXT';
+
 import axios from 'axios';
 import MyComponent from '../components/Frame';
 import { useLocation } from 'react-router-dom';
+import MyEditor from '../components/TextEditor';
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 interface BlogPost {
   _id: string;
@@ -216,7 +217,7 @@ const UpdatePosts: React.FC = () => {
                   {/* Content Editor */}
                   <div className="flex flex-col gap-1">
                     <label className="dark:text-gray-300">Content:</label>
-                    <MyEditor101 setContent={setDocu}  />
+            <MyEditor initialContent={""} setContent = {setDocu} />
                   </div>
 
                   {/* Submit Button */}

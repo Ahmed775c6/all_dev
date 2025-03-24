@@ -1,15 +1,33 @@
-
-
+import axios from "axios";
+import { useEffect, useState } from "react";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 const TermsAndFAQ = ({
 
 }) => {
-    const   contactEmail = "";
-    const contactPhone = "";
-    const businessAddress = '';
+    const   contactEmail = "alltunisiapara@gmail.com";
+    const contactPhone = "+216 99 103 052";
+    const [donne,setD] = useState<any>([]);
+    useEffect(()=>{
+      try{
+const fetchDa = async()=>{
+  const D = await axios.get(`${baseUrl}/legals101`);
+  if(D.data.message){
+
+    setD(D.data.dt);
+  }
+  
+}
+fetchDa()
+      }catch(err){
+    
+        alert('something went wrong please refresh the page & try again ');
+      }
+    },[])
+
   return (
     <div className="p-6 max-w-4xl mx-auto">
       {/* Terms & Conditions */}
-      <h1 className="text-3xl font-bold mb-6">AllTunisePara Terms & Conditions</h1>
+      <h1 className="text-3xl font-bold mb-6">All Tunisia Para Terms & Conditions</h1>
       <p className="text-gray-600 mb-8"><em>Last Updated: March 22, 2025</em></p>
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-4">Age Requirement</h2>
@@ -24,10 +42,10 @@ const TermsAndFAQ = ({
         <ul className="list-disc pl-6">
           <li className="mb-2">
             <strong>Fidelity Points:</strong> Earn 1 point per 10 TND spent. 
-            100 points = 5 TND discount. Points expire after 1 year.
+            1 points = {donne[0]?.p} TND discount. Points expire after 1 year.
           </li>
           <li className="mb-2">
-            <strong>Free Delivery:</strong> Orders over [X] TND qualify for free shipping.
+            <strong>Free Delivery:</strong> Orders over {donne[0]?.g} TND qualify for free shipping.
           </li>
           <li>
             Promotions are non-transferable and may be revoked for abuse.
@@ -141,12 +159,12 @@ const TermsAndFAQ = ({
         <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
         <p>📧 Email: {contactEmail}</p>
         <p className="my-2">📞 Phone: {contactPhone}</p>
-        <p>🏢 Address: {businessAddress}</p>
+   
         <p className="mt-4">⏰ Hours: 9:00 AM - 7:00 PM (Tunisia Time)</p>
       </div>
 
       <p className="mt-8 text-sm text-gray-500">
-        Governed by Tunisian Law | © 2025 AllTunisePara. All rights reserved.
+        Governed by Tunisian Law | © 2025 ALLTUNISIAPARA. All rights reserved.
       </p>
     </div>
   );

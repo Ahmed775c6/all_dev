@@ -101,7 +101,7 @@ const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
         <div className="blog-link link">
           <i className="fas fa-book"></i>
           <p>
-            <a href="/blog">Our Blog</a>
+            <a href="/blog">notre blog</a>
           </p>
         </div>
 {
@@ -136,7 +136,7 @@ const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
         <div className="left-side-bar w-full items-start   ">
           <a className="flex gap-0" href="/">
          
-   <h2 className="w-full p-2 text-[1.2rem] text-[#144273] font-semibold ">AllParaTunisie</h2>
+   <h2 className="w-full p-2 text-[1.2rem] text-[#144273] font-semibold ">ALL TUNISIA  PARA .</h2>
           </a>
      
         </div>
@@ -212,11 +212,11 @@ display : `${auth?.user == null ? 'none' : "flex"}`  , height : '25px !important
             <p className="text-sm">Fav</p>
           </div>
           <div className="cart" onClick={()=>{setCaret(true)}}>
-            <div className="absolute top-0 bg-red-400 rounded-full flex items-center justify-center text-center text-sm text-white p-1  h-4 right-4" id="cart_counter">
+            <div className="absolute top-0 bg-red-400 rounded-full flex items-center justify-center text-center text-sm text-white p-1  h-4 right-2" id="cart_counter">
               {value }
             </div>
             <i className="ri-shopping-cart-2-line"></i>
-            <p className="text-sm">Cart</p>
+            <p className="text-sm">Panier</p>
           </div>
         </div>
       </div>

@@ -60,7 +60,7 @@ const ProductGrid = ({ products, activePromoTab, setShowItem }: {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <Product product={product} />
+                  <Product product={product} seti={setShowItem} />
                 </motion.div>
               ))}
           </motion.div>

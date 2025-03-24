@@ -79,7 +79,9 @@ setFound(true)
 <p><strong>
 REMARQUE : ce jeton expirera dans 15 minutes</strong></p>
 <p>
-un code a été envoyé à votre email, s'il ne se trouve pas dans votre boîte de réception, vérifiez vos spams</p>
+un code a été envoyé à votre email, s'il ne se trouve pas dans votre boîte de réception, vérifiez vos spams
+<span className="text-amber-600">SI VOUS N'AVEZ PAS REÇU D'E-MAIL, VEUILLEZ VÉRIFIER VOS SPAMS OU ESSAYER DE RECEVOIR LE CODE</span>
+</p>
         <label htmlFor="email">code :</label>
         <div className="w-full p-2 flex gap-2 justify-center items-center">
               {code.map((digit, index) => (
@@ -97,7 +99,7 @@ un code a été envoyé à votre email, s'il ne se trouve pas dans votre boîte 
                   />
               ))}
           </div>
- <button className="bg-blue-950 p-2 text-white rounded-sm cursor-pointer uppercase" type="submit">{load ? "vérification ..." : 'envoyé'}</button>
+ <button className="bg-blue-950 p-2 text-white rounded-sm cursor-pointer uppercase" type="submit">{load ? "vérification en cours ..." : 'envoyé'}</button>
     </form>
 </div>
 <Footer/>

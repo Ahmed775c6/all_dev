@@ -1,17 +1,49 @@
-
+import axios from "axios";
+import { useState } from "react";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const Footer = () => {
+  const [l,setL] = useState(false)
+  const [m,setM] =useState('')
+  const [n,setN] = useState('')
+  const [s,setS] = useState('')
   return (
     <div className="footer w-full max-w-full">
       <div className="up">
         <div className="left-up">
           <h5>Abonnez-Vous À Notre Newsletter</h5>
-          <p className="max-w-full ">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut ab laboriosam aspernatur eius, aperiam illum porro voluptate distinctio esse sed neque officiis sint, asperiores facere eaque quisquam tenetur nam aliquid.
+          {s != ""  ? <span className="text-emerald-500 " >{s} ✓</span> : null}
+          <p className="max-w-full  ">
+          Ne manquez rien ! ✨
+Abonnez-vous à notre newsletter et bénéficiez en avant-première :
+
+
           </p>
+          <div className="w-full flex-col gap-2 max-w-full">
+          ✓ Des mises à jour en temps réel
+✓ Les dernières sorties de produits
+✓ Des promotions exclusives
+✓ Des contenus inédits
+… et bien plus encore, directement dans votre boîte mail !
+          </div>
           <div className="footer-mail">
-            <input type="email" placeholder="Votre Adresse email ..." />
-            <button>S'abonner</button>
+         <form onSubmit={async(e)=> {
+          e.preventDefault()
+          try{
+            setL(true)
+           const res = await axios.post(`${baseUrl}/SubSr`, {name : n , email : m});
+            setS(res.data.message);
+            setL(false)
+          }catch(err){
+            setL(false)
+          alert('something went wrong please refresh & try again')
+          }
+
+         }} className="w-full flex flex-col gap-2">
+          <input type="text" placeholder="votre nom complet ..." value={n} onChange={(e:any)=>{setN(e.target.value) ; setS('')}} />
+         <input type="email" placeholder="Votre Adresse email ..." value={m} onChange={(e:any)=>{setM(e.target.value); setS('')}}/>
+         <button type="submit" className={l ? 'cursor-not-allowed' : 'cursor-pointer'} disabled = {l}>{l ? "S'abonner en cours .." : "S'abonner"}</button>
+         </form>
           </div>
         </div>
         <div className="right-up">
@@ -23,7 +55,7 @@ const Footer = () => {
               <p>Prix d'un appel local.</p>
               <p>
                 Disponible du lundi au vendredi de 9h à 19h et le samedi matin de 9h à 12h.
-                Vous pouvez aussi consulter notre FAQ.
+                Vous pouvez aussi consulter notre <a href="/legal" className="text-blue-500">FAQ</a>.
               </p>
             </div>
           </div>
@@ -31,9 +63,11 @@ const Footer = () => {
       </div>
       <div className="down">
         <div className="logos footer-helpful-links">
-          <h3 className="footer-logo">Parashop</h3>
+          <h3 className="footer-logo uppercase " onClick={()=> {
+            window.location.href = '/'
+          }}>all tunisia para</h3>
           <p>
-          AllParaPharmacie.tn est N°1 parapharmacie en ligne en Tunisie. Vous trouverez chez Pharma-shop.tn tous vos produits parapharmaceutique (santé, beauté, minceur...)
+          ALLTUNISIAPARA est N°1 parapharmacie en ligne en Tunisie. Vous trouverez chez alltunisiapara.com  tous vos produits parapharmaceutique (santé, beauté, minceur...)
           </p>
  
         </div>
@@ -68,14 +102,14 @@ const Footer = () => {
             </li>
             <li className="contact-link text-[#144273]">
               <span>Email :</span>
-              <a href="mailto:ahmed.chouikh2020@gmail.com" className="text-[#144273]">parashop@gmail.com</a>
+              <a href="mailto:ahmed.chouikh2020@gmail.com" className="text-[#144273]">ALLTUNISIAPARA@gmail.com</a>
             </li>
           </ul>
         </div>
       </div>
       <footer>
         <div className="copy-right">
-          <span>All rights Reserved © AllParaPharmacie </span>
+          <span>All rights Reserved © ALLTUNISIAPARA </span>
           <div className="questions-marks">
             <ul>
               <li><a href="/Comment_commander">Comment commander ?</a></li>

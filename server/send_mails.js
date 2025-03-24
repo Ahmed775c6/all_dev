@@ -1,21 +1,22 @@
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const nodemailer = require('nodemailer');
+require('dotenv').config()
 const transporter = nodemailer.createTransport({
     service: 'Gmail', 
     host: 'smtp.gmail.com',
     port : 465,
     secure : true,
     auth: {
-      user: 'ahmed.chouikh2020@gmail.com',
-      pass: 'obsaqwagmbludfay',
+      user: process.env.APP_EMAIL,
+      pass: process.env.APP_PASSWORD,
     }
   });
  async function SendVerifCode(mail,Name,verificationCode,verificationLink){
     try{
-
+console.log(verificationLink)
         const mailOptions = {
-            from: 'All Para-Pharmacie',
+            from: 'All Tunsia Para',
             to: mail,
             subject: 'Account Verification',
             text: ``,
@@ -40,7 +41,7 @@ async function SendBookigNotificationMail(Admins){
 try{
   Admins.forEach((admin)=>{
     const mailOptions = {
-      from: 'M-Studio',
+      from: 'All Tunsia Para',
       to: admin.email,
       subject: 'New Order',
       text: ``,
@@ -67,7 +68,8 @@ try{
 async function ReplayToContact(mail){
   try{
     const mailOptions = {
-      from: 'ALL PARAPHARMACIE',
+      from: 'All Tunsia Para',
+  
       to: mail.email,
       subject: 'Replay to your latest Message',
       text: ``,
@@ -95,4 +97,38 @@ async function ReplayToContact(mail){
     return err;
   }
   }
-module.exports = {SendVerifCode, SendBookigNotificationMail,ReplayToContact};
+async function SendAbonnement(array) {
+  try{
+    const mailOptions = {
+      from: 'All Tunsia Para',
+  
+      to: array.email,
+      subject: 'new post added',
+      text: ``,
+      html: 
+
+`
+      <p>
+        <b>To:</b> ${array.name} <br />
+        <b>subject:</b> ${array.message} <br />
+    <a href="https://alltunisiapara.com/${array.link}" target="_blank">${array.link}</a>
+
+      </p>`
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending verification email:', error);
+        return false;
+      } else {
+        console.log('Notifications mails sent :', info.response);
+        return true;
+      }
+    })
+  
+  }catch(err){
+    console.log('error sending book notification by mail ',err)
+    return err;
+  }
+  
+}
+module.exports = {SendVerifCode, SendBookigNotificationMail,ReplayToContact, SendAbonnement};
