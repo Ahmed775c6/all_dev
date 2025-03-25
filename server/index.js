@@ -24,6 +24,7 @@ const io = require("socket.io")(server, {
     cors: {
     
         origin: FRONT,
+        secure : process.env.NODE_ENV == "production"
     },
 });
 
@@ -31,7 +32,8 @@ const io = require("socket.io")(server, {
 app.use(cors({
     origin: FRONT, 
     methods: ["GET", "POST"],        
-    credentials: true                
+    credentials: true         ,
+    secure : process.env.NODE_ENV == "production"       
 }));
 app.use(cookieParser());
 // Load environment variables
