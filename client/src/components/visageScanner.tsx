@@ -74,7 +74,8 @@ type SliderProps = {
           height={200}
           
         />
-        <button className='p-2 bg-white w-full rounded-3xl mt-2'>Discouver all</button>
+        <button className='p-2 bg-white w-full rounded-3xl mt-auto'>
+        Découvrez tout</button>
       </main>
     );
   };
@@ -119,7 +120,7 @@ const visageScanner = ({p} :any) => {
 
 </div>
 </div>
-<div ref={containerRef} className="w-full p-2 relative  h-[70vh]">
+<div ref={containerRef} className="w-full p-2  rounded-md relative  h-[70vh]">
       {/* Before Image */}
       <motion.img
         key="before"
@@ -144,7 +145,7 @@ const visageScanner = ({p} :any) => {
 
       {/* Scanner Effect */}
       <motion.div
-        className="absolute top-0 left-0 w-[3px] bg-white h-full opacity-70"
+        className="absolute  top-0 left-0 w-[3px]  bg-white h-full opacity-70"
         initial={{ x: 0 }}
         animate={{ x: 670 }}
         transition={{

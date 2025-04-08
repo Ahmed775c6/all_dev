@@ -45,9 +45,7 @@ type SliderProps = {
     );
   };
   
-  const Products = [ { name: 'DUCRAY KELUAL', price: '34.400 TND', img : '/src/assets/t.png' },
-    { name: 'URIAGE Hyssac 3', price: '42.800 TND', img : '/src/assets/t.png'  },
-    { name: 'EYE CARE Lorion', price: '34.000 TND' , img : '/src/assets/t.png'  },]
+  const Products: any[] = [];
   const Main: React.FC = () => {
     return (
       <main>
@@ -58,7 +56,8 @@ type SliderProps = {
           height={200}
           
         />
-       
+       <button className='p-2 bg-white w-full mt-auto rounded-3xl'>
+       Découvrez tout</button>
       </main>
     );
   };
@@ -77,18 +76,18 @@ const Hair = () => {
 <label className="p-2 bg-[#144273] rounded-lg text-white w-fit ">Coloration cheveux</label>
 <h1 className="text-[#144273] font-semibold text-[1.5rem]">Découvrez la coloration naturelle Phyto</h1>
 <p>Essayer une nouvelle teinte n'a jamais été aussi simple. Vous pouvez essayer n'importe quelle nuance et voir comment elle vous va</p>
-<div className="w-full flex flex-col gap-3">
+<div className="w-full flex flex-col gap-3 ">
 <Main/>
-<button className='p-2 bg-white w-full  rounded-3xl mt-2'>Discouver all</button>
+
 </div>
 </div>
 <div className="w-full p-4 relative">
-          <div className="w-full flex flex-col-reverse gap-0 justify-center">
+          <div className="w-full flex flex-col-reverse  gap-0 justify-center">
             <motion.img
               key={selectedColor}
               src={`/assets/${selectedColor}.png`}
               alt="Hair Color Preview"
-              className="w-full h-[60vh] p-2  object-contain"
+              className="w-full h-[60vh] p-2 object-contain"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -110,6 +109,7 @@ const Hair = () => {
             </div>
           </div>
         </div>
+        
 </div>
 
 </> 

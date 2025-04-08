@@ -39,8 +39,8 @@ const AdminCards = () => {
     { category: "Sales", value: Data.sales || 0 , icon: "ri-bar-chart-line", iconBg: "#E3FCEF", iconColor: "#4CAF50" },
     { category: "Orders", value: Data.orders || 0, icon: "ri-shopping-cart-line", iconBg: "#FFF4E5", iconColor: "#FF9800" },
     { category: "Customers", value: Data.clients || 0, icon: "ri-user-line", iconBg: "#E3F2FD", iconColor: "#2196F3" },
-    { category: "Expenses", value: `${Data.cost ? Data.cost : 'loading'} TND`, icon: "ri-money-dollar-circle-line", iconBg: "#FCE4EC", iconColor: "rgb(235, 84, 99)" },
-    { category: "Revenue", value: `${Data.Revenu ? Data.Revenu : "loading" } TND`, icon: "ri-line-chart-line", iconBg: "#E8F5E9", iconColor: "rgb(96, 236, 171)" }
+    { category: "Expenses", value: `${Data.cost ?Number(Data.cost).toFixed(3) : 'calculating'} TND`, icon: "ri-money-dollar-circle-line", iconBg: "#FCE4EC", iconColor: "rgb(235, 84, 99)" },
+    { category: "Revenue", value: `${Data.Revenu ? Number(Data.Revenu).toFixed(3) : "calculating" } TND`, icon: "ri-line-chart-line", iconBg: "#E8F5E9", iconColor: "rgb(96, 236, 171)" }
   ];
 
   return (

@@ -166,7 +166,7 @@ console.log(item)
               <div className="big_image bg-white">
                 <img
                   src={m}
-                  className="w-full h-full object-cover"
+                  className="w-full max-h-[440px] object-contain"
                   id="big_show"
                   alt="product"
                 />
@@ -188,9 +188,9 @@ console.log(item)
               </div>
 
               <div className="all_details">
-            <div className="w-full flex justify-between">
+            <div className="w-full flex justify-between fsdsfaa">
             <h3 className="text-[#144273] uppercase">{item.name}</h3>
-            <img src={item.brandLogo} alt="" className="w-20 h-20 cursor-pointer object-cover" onClick={()=>{window.location.href = `/shop?diection=${item.marques}`}} title={item.marques} />
+            <img src={item.brandLogo} alt="" className="w-20 h-20 cursor-pointer object-contain" onClick={()=>{window.location.href = `/shop?diection=${item.marques}`}} title={item.marques} />
             </div>
                 <span className="disc">{item.description}</span>
                 <div className="price_and_ava">
@@ -322,7 +322,7 @@ console.log(item)
                 rows={10}
               />
               
-              <button type="submit" disabled = {ls} className="bg-[#144273] p-2 text-white outline-none border-none rounded-md cursor-pointer">{ls ?'loading ..' : 'Submit' }</button>
+              <button type="submit" disabled = {ls} className="bg-[#144273] p-2 text-white outline-none border-none rounded-md cursor-pointer">{ls ?'envoi en cours..' : 'envoyé' }</button>
             </form>
           </div>
         </>

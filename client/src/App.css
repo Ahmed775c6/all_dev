@@ -6062,3 +6062,44 @@ background-position: center center;
 .contact-link a{
     color: #144273 !important;
 }
+.product2 .product_img img{
+    height: 350px !important;
+    object-fit: contain !important;
+}
+.big_image img{
+object-fit: contain !important;
+}
+@media screen and (max-width: 950px) {
+    .product_over {
+        /* grid-template-columns: repeat(1, 1fr); */
+        display: flex;
+        flex-direction: column;
+    }
+    .price_and_ava {
+      flex-direction: column;
+      gap: 20px;
+    }
+    .alorsSo{
+        width: 100% !important;
+    }
+    .posw{
+        position: absolute !important;
+        z-index: 20 !important;
+     
+        top: 0 !important;
+        height: 100%;
+        transition: all .3s ease-in-out;
+display: none;
+       
+    }
+    .poswx{display: flex !important;}
+}
+.fsdsfaa{
+    flex-wrap: wrap;
+}
+@media screen and (max-width: 380px) {
+ .smllaer{
+    min-width: 100% !important;
+    max-width: 100% !important;
+}
+}

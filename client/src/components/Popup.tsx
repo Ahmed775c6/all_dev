@@ -92,11 +92,11 @@ window.location.href = `/profile?id=${auth?.user?._id}`
               
             </div>
             <div className="product_detials">
-              <div className="the_pr_image">
+              <div className="the_pr_image bg-white">
    {
     product.discount > 0 ?              <span className="discount_pr bg-rose-100 text-rose-500 px-2 rounded-full text-xs font-medium left-0"> ⚡{product.discount}%</span> :null
    }
-                <img src={product.mainImage} alt={product.name} />
+                <img src={product.mainImage} alt={product.name} className="max-h-[400px] object-contain " />
               </div>
               <div className="the_pr_dt">
                 <h3>{product.name}</h3>

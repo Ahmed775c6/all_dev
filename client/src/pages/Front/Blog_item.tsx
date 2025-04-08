@@ -6,6 +6,7 @@ import Footer from "../../components/Footer";
 import ChatSupport from "../../components/ChatSupport";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader";
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 const Blog_Item = () => {
   const location = useLocation();
@@ -61,7 +62,7 @@ const formatDate = (dateString: string) => {
     }
   }, [content]);
   if (!item) {
-    return <p className="text-center py-10">Loading...</p>;
+  return <Loader/>
   }
 
   return (
@@ -69,8 +70,16 @@ const formatDate = (dateString: string) => {
       <Navbar />
       <div className="w-full flex flex-col   ">
         
-<div className="w-full flex flex-col text-center">
-<div className="flex flex-wrap gap-2 p-4  items-center justify-center">
+
+        <div className="w-full h-full bg-white relative">
+          <img
+            src={item.image}
+            className="w-full h-full max-h-[100vh] object-fill "
+            alt="Blog Cover"
+          />
+        </div>
+        <div className="w-full flex flex-col ">
+<div className="flex flex-wrap gap-2 p-4  ">
           {item.tags?.map((tag: string, index: number) => (
             <span
               key={index}
@@ -83,21 +92,14 @@ const formatDate = (dateString: string) => {
         
 
         <h1 className="text-3xl font-bold p-4 uppercase text-blue-900">{item.title}</h1>
-        <span className="text-gray-500 p-4">Psoted on {item.date} By @Para</span>
+        <span className="text-gray-500 p-4">posté à {item.date} By @ALL TUNSIA PARA Admin</span>
 </div>
-        <div className="w-full h-full bg-white relative">
-          <img
-            src={item.image}
-            className="w-full h-full max-h-[100vh] object-fill "
-            alt="Blog Cover"
-          />
-        </div>
 <p> {item.discription} </p>
 
         <div className="w-full h-screen ">
         <iframe
       ref={iframeRef}
-      className="w-full h-screen min-h-screen overflow-hidden"
+      className="w-full h-screen bg-white min-h-screen overflow-hidden"
       title="Content Preview"
     ></iframe>
         </div>

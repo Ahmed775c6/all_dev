@@ -212,7 +212,7 @@ window.location.reload();
 
       <motion.div layout className="product2 dark:bg-gray-800" key={product._id}>
         <div className="product_img">
-          <img className="dark:bg-slate-900" src={product.mainImage} alt={product.name} />
+          <img className="bg-white" src={product.mainImage} alt={product.name} />
           <div className="actions">
             <i
               className="ri-edit-line cursor-pointer"

@@ -886,9 +886,9 @@ app.post("/admin_login", async (req, res) => {
 
   try {
     // Find the admin user by email
-    console.log('res; ', req.body)
+
     const admin = await db.collection(ADMIN_COLLECTION).findOne({ email });
-console.log("ad :", admin)
+
     if (!admin || !(await bcrypt.compare(password, admin.password))) {
       return res.status(400).json({ error: "Invalid credentials" });
     }
@@ -2255,6 +2255,44 @@ app.post('/ADchangePassword', authenticateToken, async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+app.post('/ADchangePasswordPin101', authenticateToken, async (req, res) => {
+  const { CodeP, newCodeP } = req.body;
+
+
+  try {
+    
+      const admin = await db.collection(ADMIN_COLLECTION).findOne({ _id: new ObjectId(req.userId) });
+      
+      if (!admin) {
+          return res.status(404).json({ error: "Admin not found" });
+      }
+
+
+      const isOldPasswordValid = await bcrypt.compare(CodeP, admin.pinCodeHash);
+      if (!isOldPasswordValid) {
+          return res.status(400).json({ error: "Old code is incorrect" });
+      }
+
+   
+      const hashedNewPassword = await hashPassword(newCodeP);
+
+      const updateResult = await db.collection(ADMIN_COLLECTION).updateOne(
+          { _id: new ObjectId(req.userId) },
+          { $set: { pinCodeHash: hashedNewPassword } }
+      );
+
+      if (updateResult.modifiedCount > 0) {
+          return res.json({ message: "Code changed successfully" , success :true});
+      } else {
+          return res.status(200).json({ error: "Failed to update code ! refresh & try again " });
+      }
+  } catch (err) {
+      console.error("Error changing password:", err);
+      res.status(200).json({ error: "Internal Server Error" });
+  }
+});
+
 
 app.post('/removeFromFav',async(req,res)=>{
   try{

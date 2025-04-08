@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 import Pagination from "../../components/Pagination";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion"; // Import Framer Motion
-import { Loader } from "lucide-react";
+import Loader from "../../components/Loader";
 
 const Blog = () => {
   const Navigate = useNavigate();
@@ -41,10 +41,7 @@ const Blog = () => {
     <>
   {
     loading ?<>
-    <div className="w-full flex fixed top-0 left-0 justify-center flex-col items-center">
-    <Loader/> 
-    loading ...
-    </div>
+ <Loader/>
     
     </> : <>
         <Navbar />

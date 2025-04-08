@@ -6,12 +6,14 @@ import { useEffect,useState } from "react";
 import Themes from "../components/AdmiComponents/Themes";
 import axios from "axios";
 import Heto from "./EDitHero";
+
+import Loader from "../components/Loader";
+import { useAdminAuth } from "../context/AdminAuthProvider";
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const AppEdit = () => {
-
- 
-
+  const {token } : any = useAdminAuth();
+const [lds,SetLDS] = useState(true)
   const [Changing,setChanging] = useState(false)
    const [file1, setFile1] = useState<File | null>(null);
    const [file2, setFile2] = useState<File | null>(null);
@@ -24,8 +26,11 @@ const AppEdit = () => {
     document.body.classList.remove("light", "dark");
     document.body.classList.add(theme);
     localStorage.setItem("theme", theme);
+    if(token && token != "null"){
+      SetLDS(false);
+    }
     setTheme(theme)
-  }, [theme]);
+  }, [theme , token]);
   const [onTask, setTask] = useState(false);
  
 
@@ -47,50 +52,59 @@ const AppEdit = () => {
       }
     };
 
+   if(lds == false){
     fetchData();
+   }
   }, []);
   return (
 <>
-
 {
-  Changing ? <Themes setCh = {setChanging} /> : ''
-}
-     
-   {onTask && <TaskLoader />}
-
-<div className="w-full flex  dark:bg-[#2d3748]">
-<Aside AsideT={AsideT} setAsideT={setAside} />
-<div className="w-full min-h-[100vh] bg-[#edf4f6] flex flex-col dark:bg-[#2d3748] ">
-<Nav AsideT={AsideT} setAside={setAside} />
-<section  className=" p-6 flex flex-col gap-3 dark:bg-[#2d3748] ">
-<div className="page_title" id="with_menu" >
-  <p className="dark:text-white">Dashboard / Application Edit</p>
-  <button className="meny_btn p-2 bg-blue-500  hover:bg-blue-600  float-right cursor-pointer rounded-sm text-white" onClick = {()=>{
-    window.location.href = '/menuEdit'
-  }} >Menu Edit</button>
-</div>
-<Heto heroImages= {heroImages} setHeroImages = {setHeroImages} />
-
-<div className="hot-deals bg-white p-4 dark:bg-gray-900">
-  <header className="edit_header">
-    <h1 className="dark:text-white">Hot Deals Section :</h1>
-  </header>
+  lds ? <Loader/> : <>
+  {
+    onTask && <TaskLoader /> 
+  }
+  {
+    Changing ? <Themes setCh = {setChanging} /> : ''
+  }
+       
+     {onTask && <TaskLoader />}
   
-<HotDealsForm setTask = {setTask} file1 = {file1} setFile1= {setFile1}  file2 = {file2} setFile2 = {setFile2} filePreview1 = {filePreview1} setFilePreview1 = {setFilePreview1} filePreview2 = {filePreview2} setFilePreview2 ={setFilePreview2} />
-
-</div>
-
-
-</section>
+  <div className="w-full flex  dark:bg-[#2d3748]">
+  <Aside AsideT={AsideT} setAsideT={setAside} />
+  <div className="w-full min-h-[100vh] bg-[#edf4f6] flex flex-col dark:bg-[#2d3748] ">
+  <Nav AsideT={AsideT} setAside={setAside} />
+  <section  className=" p-6 flex flex-col gap-3 dark:bg-[#2d3748] ">
+  <div className="page_title" id="with_menu" >
+    <p className="dark:text-white">Dashboard / Application Edit</p>
+    <button className="meny_btn p-2 bg-blue-500  hover:bg-blue-600  float-right cursor-pointer rounded-sm text-white" onClick = {()=>{
+      window.location.href = '/menuEdit'
+    }} >Menu Edit</button>
   </div>
-</div>
-<button className="fixed justify-center right-10 bottom-10 rounded-full w-11 h-11 text-center items-center outline-none border-none cursor-pointer flex p-2 bg-blue-500 hover:bg-blue-600 text-white"
-onClick={()=>{
-  setChanging(true);
-}}
->
-  <i className="ri-settings-line"></i>
-</button>
+  <Heto heroImages= {heroImages} setHeroImages = {setHeroImages} />
+  
+  <div className="hot-deals bg-white p-4 dark:bg-gray-900">
+    <header className="edit_header">
+      <h1 className="dark:text-white">Hot Deals Section :</h1>
+    </header>
+    
+  <HotDealsForm setTask = {setTask} file1 = {file1} setFile1= {setFile1}  file2 = {file2} setFile2 = {setFile2} filePreview1 = {filePreview1} setFilePreview1 = {setFilePreview1} filePreview2 = {filePreview2} setFilePreview2 ={setFilePreview2} />
+  
+  </div>
+  
+  
+  </section>
+    </div>
+  </div>
+  <button className="fixed justify-center right-10 bottom-10 rounded-full w-11 h-11 text-center items-center outline-none border-none cursor-pointer flex p-2 bg-blue-500 hover:bg-blue-600 text-white"
+  onClick={()=>{
+    setChanging(true);
+  }}
+  >
+    <i className="ri-settings-line"></i>
+  </button>
+  </>
+}
+
 </>
   )
 }

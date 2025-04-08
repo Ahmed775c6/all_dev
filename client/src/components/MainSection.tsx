@@ -19,20 +19,20 @@ const [AboutCon,setAboutCon] = useState<any>('');
 const Navigate = useNavigate()
   const ScrollLeft = () => {
     if (scrollContainerRef.current ) {
-      scrollContainerRef.current.scrollLeft -= 400;
+      scrollContainerRef.current.scrollLeft -= 350;
     }
   };
 
 
   const ScrollRight = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft += 400;
+      scrollContainerRef.current.scrollLeft += 350;
     }
   };
   
   const ScrollLeft2 = () => {
     if (scrollContainerRef1.current ) {
-      scrollContainerRef1.current.scrollLeft -= 400;
+      scrollContainerRef1.current.scrollLeft -= 350;
     }
   };
 
@@ -40,7 +40,7 @@ const Navigate = useNavigate()
 
   const ScrollRight2 = () => {
     if (scrollContainerRef1.current) {
-      scrollContainerRef1.current.scrollLeft += 400;
+      scrollContainerRef1.current.scrollLeft += 350;
     }
   };
 
@@ -99,7 +99,7 @@ F();
 
 <Hero/>
 <Publ/> 
-      <div className="visage">
+      <div className="visage mb-4">
         <div className="visage-top">
           <h3>Visage</h3>
           <div className="vis-link">
@@ -124,9 +124,9 @@ F();
         </div>
         <div className="visage-main">
           <div className="visage-image">
-            <img src="/assets/face.png" alt="" />
+            <img src="/assets/face.png" alt="" className=" rounded-sm h-full min-h-full" />
           </div>
-          <div className="visage-shop" id="shopContainer" ref={scrollContainerRef} key="shopContainer">
+          <div className="w-full flex  gap-3 overflow-hidden" id="shopContainer" ref={scrollContainerRef} key="shopContainer">
   {products.map((product: any) => {
     if (
       product.status &&
@@ -134,7 +134,7 @@ F();
       activeVisageTab.toLowerCase() === product.sous.toLowerCase()
     ) {
       return (
-        <div className="w-full" key={product._id}>
+        <div className="w-full min-w-[350px] max-w-[350px] smllaer" key={product._id}>
           <Product product={product} seti={setShowItem} />
         </div>
       );
@@ -190,14 +190,14 @@ F();
           <div className="visage-image ch">
             <img src="/assets/hair.png" alt="chevaux" />
           </div>
-          <div className="visage-shop" id="shopContainer2" ref={scrollContainerRef1}>
+          <div className="w-full flex  gap-3 overflow-hidden" id="shopContainer2" ref={scrollContainerRef1}>
   {products.map((product: any) => {
     if (
       product.Categorie.toLowerCase() === "cheveau" &&
       activeCheveauTab.toLowerCase() === product.sous.toLowerCase()
     ) {
       return (
-        <div className="w-full" key={product.id}>
+        <div className="w-full min-w-[350px] max-w-[350px] smllaer" key={product.id}>
           <Product product={product} seti={setShowItem} />
         </div>
       );
@@ -235,6 +235,7 @@ F();
           </ul>
         </div>
    <ProductGrid products={products} activePromoTab={activePromoTab} setShowItem={setShowItem}  />
+   
         <div className="about-us bg-white ">
         <div className="col-inner">
   <h1>PARAPHARMACIE ALL TUNISIA PARA</h1>

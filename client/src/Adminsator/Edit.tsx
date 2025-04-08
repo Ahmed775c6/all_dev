@@ -36,6 +36,15 @@ const [name,setName] = useState('');
 const [fixed,setFixed] = useState('');
 const [id,setID] = useState('');
 const [passok,setPassok] = useState('')
+
+const [CodeP,setCodeP] = useState('')
+const [newCodeP,setNewCodeP] = useState('')
+const [CCodeP,setCcodeP] = useState('')
+const [tL,setTl] = useState(false)
+const [passokx , setPassokX] = useState('')
+const [errorMessage101, setErrorMessage101] = useState("");
+
+
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -82,7 +91,58 @@ const [passok,setPassok] = useState('')
       setBezy(false)
     }
   };
+  const   handleChangePassword101 = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+
+    setErrorMessage101("");
+ 
+    setTl(true)
   
+    if (!CodeP || !newCodeP || !CCodeP) {
+      setErrorMessage101("Please fill out all fields.");
+      return;
+    }
+  
+    try {
+    const token = auth.token
+  
+      if (!token) {
+        setErrorMessage101("Authorization token missing.");
+        
+        return;
+      }
+   if(CCodeP !== newCodeP){
+    setErrorMessage101("Code Pin not match.");
+    setTl(false)
+    return;
+   }
+  
+      // Send password change request to the backend with the token
+      const response = await axios.post(
+        `${baseUrl}/ADchangePasswordPin101`, 
+        { CodeP, newCodeP },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token in headers
+          },
+        }
+      );
+  
+      if (response.data.success) {
+        setPassokX('code updated successfully')
+
+      } else {
+        setErrorMessage101(response.data.message  || "An error occurred.");
+      }
+      setTl(false)
+    } catch (error) {
+      console.error(error);
+      setErrorMessage101("Failed to update code.");
+      setTl(false)
+    }
+  };
+
 
   const handlePersonnel = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -258,12 +318,68 @@ setLoading(false);
                    {passok && (
                   <p className="text-green-500 text-sm">{passok}</p>
                 )}
-                <button type="submit" className="bg-blue-500 p-2 text-white rounded-md cursor-pointer">
+                <button type="submit" disabled = {bezy} className="bg-blue-500 p-2 text-white rounded-md cursor-pointer">
                   Save
                 </button>
               </form>
             </div>
+            
           </div>
+    <div className="w-[50%] alorsSo flex flex-col gap-3 p-4 bg-white shadow-md rounded-md dark:bg-gray-900">
+    <header className="w-full flex flex-row p-2">
+                <h4 className="text-[1rem]">Code Pin :</h4>
+              </header>
+              <form onSubmit={handleChangePassword101} className="w-full p-2 flex flex-col gap-4">
+                <div className="w-full flex flex-col gap-2">
+                  <label htmlFor="old" className="w-full flex gap-2">
+                    <i className="ri-lock-unlock-line"></i> Old Code :
+                  </label>
+                  <input
+                    type="password"
+                    name="oldCode"
+                    placeholder="Old Code :"
+                    className="p-2 w-full bg-gray-200 outline-none border-none dark:bg-gray-700"
+                    value={CodeP}
+                    required
+                    onChange={(e) => setCodeP(e.target.value)}
+                  />
+                  <label htmlFor="new" className="w-full flex gap-2">
+                    <i className="ri-lock-2-line"></i> New Code :
+                  </label>
+                  <input
+                    type="password"
+                    name="newCode"
+                    placeholder="New Code :"
+                    className="p-2 w-full bg-gray-200 outline-none border-none dark:bg-gray-700"
+                    value={newCodeP}
+                    required
+                    onChange={(e) => setNewCodeP(e.target.value)}
+                  />
+                  <label htmlFor="pin" className="w-full flex gap-2">
+                    <i className="ri-user-settings-fill"></i> Confirme New Code :
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="Code Pin:"
+                    name="confirmeCode"
+                    className="p-2 w-full bg-gray-200 outline-none border-none dark:bg-gray-700"
+                    value={CCodeP}
+                    required
+                    onChange={(e) => setCcodeP(e.target.value)}
+                  />
+                </div>
+                {errorMessage101 && (
+                  <p className="text-red-500 text-sm">{errorMessage101}</p>
+                )}
+                   {passokx && (
+                  <p className="text-green-500 text-sm">{passokx}</p>
+                )}
+                <button type="submit" disabled = {tL} className="bg-blue-500 p-2 text-white rounded-md cursor-pointer">
+         {tL ? 'Loading ..' : 'Save'}
+                </button>
+              </form>
+    </div>
+       
         </section>
       </div>
       <button className="fixed justify-center right-10 bottom-10 rounded-full w-11 h-11 text-center items-center outline-none border-none cursor-pointer flex p-2 bg-blue-400 text-white"

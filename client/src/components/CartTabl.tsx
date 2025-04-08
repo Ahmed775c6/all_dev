@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { increment } from "../redux/counter";
 
 
-const ShoppingCartTable = ({ cartItems, onUpdateQuantity, onRemoveItem } : any) => {
+const ShoppingCartTable = ({ cartItems, onUpdateQuantity, onRemoveItem ,setCommand} : any) => {
   
 
   const calculateTotal = () => {
@@ -56,6 +56,11 @@ const Dipatch = useDispatch();
       </table>
       <div className="cart-total p-2">
         <h3 className="text-[1rem] p-2 font-bold">Total: {calculateTotal()} TND</h3>
+        <button className="p-2 bg-[var(--ghame9)] poswx text-white rounded-sm w-full  hidden justify-center items-center" onClick={()=>{
+          console.log("total",calculateTotal())
+          setCommand(true)
+        }}>
+        Acheter</button>
       </div>
     </div>
   );
